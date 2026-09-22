@@ -1,10 +1,15 @@
 import type { Product } from '../domain/types'
+import approvedLogo from '../assets/brand/jimon-logo-approved.png'
 
-export function BrandHeader({ onBack, compact = false }: { onBack?: () => void; compact?: boolean }) {
+export function BrandHeader({ onBack, compact = false, approved = false }: { onBack?: () => void; compact?: boolean; approved?: boolean }) {
   return (
     <header className={`brand-header ${compact ? 'brand-header--compact' : ''}`}>
       {onBack && <button className="icon-button brand-header__back" onClick={onBack} aria-label="Назад">←</button>}
-      <div className="brand-lockup"><span className="brand-mark" aria-hidden="true" /><span className="brand-name">JIMON</span></div>
+      <div className="brand-lockup">
+        {approved
+          ? <img className="brand-logo-approved" src={approvedLogo} alt="JIMON" />
+          : <><span className="brand-mark" aria-hidden="true" /><span className="brand-name">JIMON</span></>}
+      </div>
       {!compact && <p>Здоровье. Качество. Возможности.</p>}
     </header>
   )

@@ -1,6 +1,7 @@
 import { BrandHeader } from '../../components/Common'
 import { UiIcon } from '../../components/Icons'
 import homeApprovedReference from '../../assets/ui/home/home-approved-reference-cropped-2x.png'
+import newcomerFoliageApproved from '../../assets/ui/onboarding/newcomer-foliage-approved-v3.png'
 
 export function HomeScreen({ onNewcomer, onPartner }: { onNewcomer: () => void; onPartner: () => void }) {
   return (
@@ -14,13 +15,14 @@ export function HomeScreen({ onNewcomer, onPartner }: { onNewcomer: () => void; 
 
 export function NewcomerScreen({ onBack, onContinue }: { onBack: () => void; onContinue: () => void }) {
   const steps = [
-    { number: '1', icon: 'cart' as const, title: 'Выберите товары', text: 'Изучите каталог и добавьте нужные позиции в план.' },
-    { number: '2', icon: 'plan' as const, title: 'Добавьте их в план покупок', text: 'Сформируйте план из отдельных заказов.' },
+    { number: '1', icon: 'cart' as const, title: 'Выберите товары', text: 'Изучите каталог и добавьте нужные позиции в план покупок.' },
+    { number: '2', icon: 'plan' as const, title: 'Добавьте их в план покупок', text: 'Сформируйте план покупок из отдельных заказов.' },
     { number: '3', icon: 'chart' as const, title: 'Следите, как меняется скидка', text: 'Цена каждого следующего заказа пересчитывается последовательно.' },
   ]
   return (
     <main className="screen onboarding-screen newcomer-screen">
-      <BrandHeader onBack={onBack} compact />
+      <img className="newcomer-foliage" src={newcomerFoliageApproved} alt="" aria-hidden="true" />
+      <BrandHeader onBack={onBack} compact approved />
       <section className="intro">
         <span className="eyebrow">Для новичка</span><h1>Как это работает</h1>
         <div className="intro-card">
@@ -29,7 +31,7 @@ export function NewcomerScreen({ onBack, onContinue }: { onBack: () => void; onC
           <div className="starting-point"><span><small>Стартовая скидка</small><strong>0%</strong></span><span><small>Товарооборот</small><strong>0 ¥</strong></span></div>
         </div>
         <ol className="steps">{steps.map((step) => <li key={step.number}><span className="step-number">{step.number}</span><span className="step-icon"><UiIcon name={step.icon} /></span><div><strong>{step.title}</strong><small>{step.text}</small></div></li>)}</ol>
-        <p className="notice notice--warm">Скидка может измениться уже между отдельными заказами в текущем плане.</p>
+        <p className="notice notice--warm"><span className="notice__warning-icon" aria-hidden="true">!</span><span>Скидка может измениться уже между отдельными заказами в текущем плане покупок.</span></p>
       </section>
       <div className="screen-actions"><button className="primary-button" onClick={onContinue}>Перейти к товарам</button></div>
     </main>

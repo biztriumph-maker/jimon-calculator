@@ -159,24 +159,48 @@
     radial-gradient(circle at 90% 4%, rgba(154,197,130,.22), transparent 180px),
     linear-gradient(180deg, #fff 0%, #fbfdf9 72%, #f4faf3 100%);
 }
-.onboarding-screen::before {
-  content: "";
+.newcomer-screen {
+  overflow: visible;
+}
+.newcomer-foliage {
+  display: block;
   position: absolute;
-  z-index: -1;
-  top: -22px;
-  right: -34px;
-  width: 160px;
-  height: 150px;
-  opacity: .52;
-  background:
-    radial-gradient(ellipse 29px 13px at 34% 24%, rgba(72,145,69,.58) 0 62%, transparent 66%),
-    radial-gradient(ellipse 25px 11px at 62% 42%, rgba(111,171,87,.5) 0 62%, transparent 66%),
-    radial-gradient(ellipse 28px 12px at 84% 17%, rgba(69,139,66,.44) 0 62%, transparent 66%);
-  transform: rotate(-8deg);
+  z-index: 0;
+  top: 8px;
+  right: 12px;
+  width: 64px;
+  height: auto;
+  object-fit: contain;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  filter: none;
+  pointer-events: none;
 }
 .onboarding-screen .brand-header--compact {
   border-bottom: 0;
   min-height: 54px;
+}
+.newcomer-screen .brand-header--compact {
+  min-height: 56px;
+  padding: 0 0 2px;
+}
+.newcomer-screen .brand-logo-approved {
+  display: block;
+  width: 142px;
+  height: 56px;
+  object-fit: contain;
+}
+.newcomer-screen .brand-header__back {
+  transition: transform 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+.newcomer-screen .brand-header__back:active {
+  transform: scale(.96);
+  background: #e3f0e5;
+}
+.newcomer-screen .brand-header__back:focus-visible {
+  outline-color: rgba(74,128,88,.28);
+  box-shadow: 0 0 0 4px rgba(74,128,88,.12);
 }
 .onboarding-screen .intro { padding-top: 10px; }
 .onboarding-screen .intro h1 {
@@ -258,20 +282,55 @@
 .onboarding-screen .steps strong { font-size: .79rem; line-height: 1.18; }
 .onboarding-screen .steps small { font-size: .67rem; line-height: 1.26; }
 .onboarding-screen .notice--warm {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
   margin-top: 9px;
   padding: 10px 12px;
   border: 1px solid #f5e7ba;
   border-radius: 13px;
   font-size: .72rem;
 }
+.onboarding-screen .notice__warning-icon {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #fff;
+  background: #d9a62e;
+  font-size: .78rem;
+  font-weight: 900;
+  line-height: 1;
+}
 .onboarding-screen .screen-actions {
   margin-top: auto;
   padding-top: 12px;
 }
-.onboarding-screen .screen-actions .primary-button {
+.newcomer-screen .screen-actions .primary-button {
+  --newcomer-cta: #4A8058;
+  --newcomer-cta-hover: #447851;
+  --newcomer-cta-pressed: #3D6E49;
+  --newcomer-cta-focus: rgba(74,128,88,.28);
+  --newcomer-cta-text: #FFFFFF;
   min-height: 51px;
   border-radius: 13px;
-  box-shadow: 0 10px 24px rgba(15,112,59,.2);
+  color: var(--newcomer-cta-text);
+  background: var(--newcomer-cta);
+  box-shadow: 0 10px 24px rgba(74,128,88,.2);
+}
+.newcomer-screen .screen-actions .primary-button:active {
+  background: var(--newcomer-cta-pressed);
+}
+.newcomer-screen .screen-actions .primary-button:focus-visible {
+  outline-color: var(--newcomer-cta-focus);
+  box-shadow: 0 0 0 4px var(--newcomer-cta-focus), 0 10px 24px rgba(74,128,88,.2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .newcomer-screen .screen-actions .primary-button:hover {
+    background: var(--newcomer-cta-hover);
+  }
 }
 
 .modal-backdrop {
