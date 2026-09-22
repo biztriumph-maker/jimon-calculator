@@ -1,38 +1,13 @@
 import { BrandHeader } from '../../components/Common'
 import { UiIcon } from '../../components/Icons'
+import homeApprovedReference from '../../assets/ui/home/home-approved-reference-cropped-2x.png'
 
 export function HomeScreen({ onNewcomer, onPartner }: { onNewcomer: () => void; onPartner: () => void }) {
   return (
     <main className="screen home-screen">
-      <BrandHeader />
-      <section className="hero">
-        <h1><span>Ваш личный</span><span>калькулятор покупок</span></h1>
-        <p>Просто. Понятно. Выгодно.</p>
-        <div className="nature-scene" aria-hidden="true">
-          <span className="nature-scene__sun" />
-          <span className="nature-scene__mountain nature-scene__mountain--back" />
-          <span className="nature-scene__mountain nature-scene__mountain--middle" />
-          <span className="nature-scene__mountain nature-scene__mountain--front" />
-          <span className="nature-scene__mist" />
-        </div>
-      </section>
-      <section className="role-list" aria-label="Выберите режим">
-        <button className="role-card" onClick={onNewcomer}>
-          <span className="role-card__icon"><UiIcon name="leaf" /></span>
-          <span><strong>Я новичок</strong><small>Хочу понять, как правильно сделать первые покупки и получить скидку</small></span>
-          <span className="role-card__arrow" aria-hidden="true">›</span>
-        </button>
-        <button className="role-card" onClick={onPartner}>
-          <span className="role-card__icon"><UiIcon name="person" /></span>
-          <span><strong>Я партнёр</strong><small>Я уже знаю свою скидку и хочу рассчитать стоимость товаров</small></span>
-          <span className="role-card__arrow" aria-hidden="true">›</span>
-        </button>
-      </section>
-      <section className="benefits" aria-label="Преимущества">
-        <div><span className="benefit-icon"><UiIcon name="diamond" /></span><small>Актуальные<br />цены</small></div>
-        <div><span className="benefit-icon"><UiIcon name="shield" /></span><small>Учитываем правила<br />компании</small></div>
-        <div><span className="benefit-icon"><UiIcon name="heart" /></span><small>Удобно<br />на телефоне</small></div>
-      </section>
+      <img className="home-approved-reference" src={homeApprovedReference} alt="" aria-hidden="true" />
+      <button className="home-hit-area home-hit-area--newcomer" aria-label="Я новичок" onClick={onNewcomer} />
+      <button className="home-hit-area home-hit-area--partner" aria-label="Я партнёр" onClick={onPartner} />
     </main>
   )
 }
