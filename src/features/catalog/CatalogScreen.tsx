@@ -72,7 +72,7 @@ export function CatalogScreen({ start, orders, onHome, onEditPartner, onAddProdu
 
   return (
     <main className="screen catalog-screen">
-      <BrandHeader onBack={onHome} compact />
+      <BrandHeader onBack={onHome} compact approved />
       {start?.mode === 'partner' && <PartnerStatus start={start} onEdit={onEditPartner} />}
       {start?.mode === 'newcomer' && <div className="level-status"><span>Товарооборот: <strong>{formatMoney(plan?.finalTurnover ?? 0)}</strong></span><span>Следующий заказ: <strong>{level}%</strong></span></div>}
       <section className="catalog-controls">

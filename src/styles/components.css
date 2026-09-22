@@ -39,12 +39,12 @@
 .discount-grid button { min-height: 54px; padding: 7px 4px; border: 1px solid transparent; border-radius: 11px; color: var(--green-950); background: var(--green-100); }
 .discount-grid button strong, .discount-grid button small { display: block; }
 .discount-grid button small { margin-top: 2px; font-size: .58rem; line-height: 1.1; }
-.discount-grid button.selected { color: white; background: var(--green-700); }
+.discount-grid button.selected { color: var(--jimon-action-text); background: var(--jimon-action); }
 .discount-grid button:disabled { color: #87908a; background: #eef0ee; opacity: 1; }
 .text-input { width: 100%; min-height: 49px; padding: 11px 13px; border: 1px solid #bac7bd; border-radius: 11px; color: var(--text); background: white; font-weight: 700; }
 .text-input:disabled { color: #89928c; background: #f0f2f0; }
 .checkbox-row { display: flex; align-items: center; gap: 9px; padding-top: 13px; font-size: .87rem; }
-.checkbox-row input { width: 20px; height: 20px; accent-color: var(--green-700); }
+.checkbox-row input { width: 20px; height: 20px; accent-color: var(--jimon-action); }
 .modal__actions { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; margin-top: 20px; }
 
 .partner-status, .level-status { margin: 12px 0; border-radius: 13px; background: var(--green-100); font-size: .78rem; }
@@ -59,7 +59,7 @@
 .filter-group > strong { font-size: .78rem; }
 .segmented { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
 .segmented button { min-width: 0; min-height: 39px; padding: 6px 3px; border: 0; border-radius: 10px; color: #31543f; background: var(--green-100); font-size: clamp(.67rem, 2.6vw, .8rem); }
-.segmented button.selected { color: white; background: var(--green-700); font-weight: 800; }
+.segmented button.selected { color: var(--jimon-action-text); background: var(--jimon-action); font-weight: 800; }
 .catalog-meta { display: flex; justify-content: space-between; gap: 8px; padding: 6px 2px 11px; color: var(--muted); font-size: .68rem; }
 .product-list { display: grid; gap: 11px; padding-bottom: 92px; }
 .product-card { display: grid; grid-template-columns: 104px 1fr; gap: 13px; padding: 11px; border: 1px solid var(--border); border-radius: 18px; background: white; box-shadow: 0 8px 22px rgba(15,71,37,.055); }
@@ -77,6 +77,16 @@
 .price--missing { color: #946b12; font-size: .76rem; white-space: normal; }
 .sticky-plan { position: sticky; z-index: 10; bottom: 0; padding: 12px 0 max(12px,env(safe-area-inset-bottom)); background: linear-gradient(transparent,#fbfdfb 24%); }
 .sticky-plan .primary-button { display: flex; justify-content: center; gap: 12px; box-shadow: 0 10px 30px rgba(12,105,57,.25); }
+
+@media (min-width: 721px) {
+  .catalog-screen .sticky-plan {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    width: min(calc(100vw - 60px), 660px);
+    transform: translateX(-50%);
+  }
+}
 
 .modal-backdrop--sheet { place-items: end center; padding: 0; }
 .order-editor { width: min(100%,720px); max-height: 92dvh; border-radius: 24px 24px 0 0; padding-bottom: max(22px,env(safe-area-inset-bottom)); }
@@ -309,11 +319,11 @@
   padding-top: 12px;
 }
 .newcomer-screen .screen-actions .primary-button {
-  --newcomer-cta: #4A8058;
-  --newcomer-cta-hover: #447851;
-  --newcomer-cta-pressed: #3D6E49;
-  --newcomer-cta-focus: rgba(74,128,88,.28);
-  --newcomer-cta-text: #FFFFFF;
+  --newcomer-cta: var(--jimon-action);
+  --newcomer-cta-hover: var(--jimon-action-hover);
+  --newcomer-cta-pressed: var(--jimon-action-pressed);
+  --newcomer-cta-focus: var(--jimon-action-focus);
+  --newcomer-cta-text: var(--jimon-action-text);
   min-height: 51px;
   border-radius: 13px;
   color: var(--newcomer-cta-text);
@@ -369,9 +379,9 @@
 }
 .partner-modal .discount-grid button strong { font-size: .95rem; }
 .partner-modal .discount-grid button.selected {
-  border-color: #0d793f;
-  color: white;
-  background: linear-gradient(145deg, #17914f, #0c713d);
+  border-color: var(--jimon-action);
+  color: var(--jimon-action-text);
+  background: var(--jimon-action);
   box-shadow: 0 8px 18px rgba(13,113,61,.2);
 }
 .partner-modal .discount-grid button:disabled {
@@ -396,8 +406,23 @@
   border-radius: 14px;
   background: #eef8f0;
 }
+.partner-modal .notice--warning {
+  border-color: #ead59c;
+  color: #6d5416;
+  background: #fff7da;
+}
 .partner-modal .modal__actions { margin-top: 18px; }
 .partner-modal .modal__actions button { min-height: 52px; border-radius: 13px; }
+
+.catalog-screen .brand-logo-approved {
+  display: block;
+  width: 102px;
+  height: 40px;
+  object-fit: contain;
+  border: 0;
+  box-shadow: none;
+  filter: none;
+}
 
 @media (max-width: 380px) {
   .onboarding-screen .intro-card { padding: 12px; }

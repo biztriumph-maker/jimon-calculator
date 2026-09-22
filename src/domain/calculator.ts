@@ -22,6 +22,16 @@ export const getDiscountForTurnover = (
   return Math.max(reached, minimum) as DiscountLevel
 }
 
+export const getPartnerDiscountMismatch = (
+  selectedDiscount: DiscountLevel,
+  turnover: number | null,
+): DiscountLevel | null => {
+  if (turnover === null) return null
+
+  const expectedDiscount = getDiscountForTurnover(turnover)
+  return expectedDiscount === selectedDiscount ? null : expectedDiscount
+}
+
 export const getActualPrice = (
   product: Product,
   level: DiscountLevel,

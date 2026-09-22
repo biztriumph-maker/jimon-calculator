@@ -11,6 +11,11 @@
   --green-700: #128248;
   --green-200: #d9eddf;
   --green-100: #edf7ef;
+  --jimon-action: #43806C;
+  --jimon-action-hover: #3B745F;
+  --jimon-action-pressed: #346956;
+  --jimon-action-focus: rgba(67, 128, 108, 0.28);
+  --jimon-action-text: #FFFFFF;
   --gold: #d9b651;
   --cream: #fbfcf7;
   --surface: #ffffff;
@@ -30,7 +35,7 @@ button { cursor: pointer; }
 button:disabled { cursor: not-allowed; }
 h1, h2, h3, p { margin-top: 0; }
 button:focus-visible, input:focus-visible {
-  outline: 3px solid rgba(19, 131, 75, 0.28);
+  outline: 3px solid var(--jimon-action-focus);
   outline-offset: 2px;
 }
 
@@ -60,12 +65,16 @@ button:focus-visible, input:focus-visible {
   font-weight: 750;
   transition: transform 120ms ease, background 120ms ease, opacity 120ms ease;
 }
-.primary-button, .small-button { color: white; background: var(--green-700); }
+.primary-button, .small-button { color: var(--jimon-action-text); background: var(--jimon-action); }
 .primary-button { width: 100%; padding: 13px 18px; font-size: 1rem; }
 .secondary-button { color: var(--green-800); background: var(--green-100); border: 1px solid var(--green-200); padding: 11px 18px; }
 .small-button { min-height: 42px; padding: 9px 14px; font-size: 0.82rem; }
-.primary-button:not(:disabled):active, .small-button:not(:disabled):active { transform: scale(0.985); }
-.primary-button:disabled, .small-button:disabled { opacity: 0.46; }
+.primary-button:not(:disabled):active, .small-button:not(:disabled):active { background: var(--jimon-action-pressed); transform: scale(0.985); }
+.primary-button:disabled, .small-button:disabled { background: var(--green-700); opacity: 0.46; }
+
+@media (hover: hover) and (pointer: fine) {
+  .primary-button:not(:disabled):hover, .small-button:not(:disabled):hover { background: var(--jimon-action-hover); }
+}
 .icon-button {
   width: 42px;
   height: 42px;

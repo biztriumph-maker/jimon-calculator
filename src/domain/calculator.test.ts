@@ -4,6 +4,7 @@ import {
   calculateCourierFee,
   calculatePlan,
   getDiscountForTurnover,
+  getPartnerDiscountMismatch,
   moveOrder,
 } from './calculator'
 import type { PlanOrder } from './types'
@@ -18,15 +19,32 @@ describe('уровни скидок', () => {
   it('определяет уровни по порогам', () => {
     expect(getDiscountForTurnover(330)).toBe(0)
     expect(getDiscountForTurnover(331)).toBe(10)
+    expect(getDiscountForTurnover(1502)).toBe(10)
     expect(getDiscountForTurnover(1503)).toBe(20)
+    expect(getDiscountForTurnover(5799)).toBe(20)
     expect(getDiscountForTurnover(5800)).toBe(30)
+    expect(getDiscountForTurnover(21999)).toBe(30)
     expect(getDiscountForTurnover(22000)).toBe(40)
+    expect(getDiscountForTurnover(219999)).toBe(40)
     expect(getDiscountForTurnover(220000)).toBe(50)
+    expect(getDiscountForTurnover(659999)).toBe(50)
     expect(getDiscountForTurnover(660000)).toBe(60)
   })
 
   it('никогда не понижает авторитетную стартовую скидку', () => {
     expect(getDiscountForTurnover(100, 30)).toBe(30)
+  })
+
+  it('возвращает ожидаемый уровень при несовпадении', () => {
+    expect(getPartnerDiscountMismatch(20, 20000)).toBe(30)
+  })
+
+  it('не проверяет соответствие при неизвестном товарообороте', () => {
+    expect(getPartnerDiscountMismatch(20, null)).toBeNull()
+  })
+
+  it('принимает согласованные скидку и товарооборот', () => {
+    expect(getPartnerDiscountMismatch(30, 20000)).toBeNull()
   })
 })
 

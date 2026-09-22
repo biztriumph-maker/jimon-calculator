@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { formatMoney } from '../../app/utils'
+import { getPartnerDiscountMismatch } from '../../domain/calculator'
 import { PARTNER_LEVELS, SELECTABLE_PARTNER_LEVELS } from '../../domain/thresholds'
 import type { CalculationStart, DiscountLevel } from '../../domain/types'
 
@@ -15,6 +17,15 @@ export function PartnerModal({ initial, onApply, onCancel }: {
   const [unknown, setUnknown] = useState(initial?.turnover === null)
   const numericTurnover = Number(turnover)
   const turnoverValid = unknown || (turnover.trim() !== '' && Number.isFinite(numericTurnover) && numericTurnover >= 0)
+  const expectedDiscount = !unknown && turnoverValid
+    ? getPartnerDiscountMismatch(discount, numericTurnover)
+    : null
+  const canApply = turnoverValid && expectedDiscount === null
+
+  const handleApply = () => {
+    if (!canApply) return
+    onApply({ mode: 'partner', discount, turnover: unknown ? null : numericTurnover })
+  }
 
   return (
     <div className="modal-backdrop" role="presentation">
@@ -38,6 +49,11 @@ export function PartnerModal({ initial, onApply, onCancel }: {
         </fieldset>
         <label className="field-label" htmlFor="turnover">Текущий накопленный товарооборот, ¥</label>
         <input id="turnover" className="text-input" type="number" min="0" step="1" inputMode="numeric" disabled={unknown} value={unknown ? '' : turnover} onChange={(event) => setTurnover(event.target.value)} placeholder="Например, 18 500" />
+        {expectedDiscount !== null && (
+          <p className="notice notice--warning" role="alert">
+            Проверьте данные: при товарообороте {formatMoney(numericTurnover)} по таблице соответствует скидка {expectedDiscount}%, а выбрана {discount}%. Исправьте скидку или товарооборот.
+          </p>
+        )}
         <label className="checkbox-row">
           <input type="checkbox" checked={unknown} onChange={(event) => setUnknown(event.target.checked)} />
           <span>Не помню товарооборот</span>
@@ -49,7 +65,7 @@ export function PartnerModal({ initial, onApply, onCancel }: {
         </p>
         <div className="modal__actions">
           <button className="secondary-button" onClick={onCancel}>Отмена</button>
-          <button className="primary-button" disabled={!turnoverValid} onClick={() => onApply({ mode: 'partner', discount, turnover: unknown ? null : numericTurnover })}>Применить</button>
+          <button className="primary-button" disabled={!canApply} onClick={handleApply}>Применить</button>
         </div>
       </section>
     </div>
