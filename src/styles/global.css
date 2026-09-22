@@ -1,0 +1,113 @@
+@import './components.css';
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #11251a;
+  background: #edf4ee;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --green-950: #06351e;
+  --green-800: #0b6337;
+  --green-700: #128248;
+  --green-200: #d9eddf;
+  --green-100: #edf7ef;
+  --gold: #d9b651;
+  --cream: #fbfcf7;
+  --surface: #ffffff;
+  --surface-muted: #f5f8f5;
+  --text: #11251a;
+  --muted: #66736a;
+  --border: #dce4dd;
+  --danger: #a52c2c;
+  --shadow: 0 14px 38px rgba(14, 61, 33, 0.1);
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; min-height: 100%; background: #edf4ee; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+h1, h2, h3, p { margin-top: 0; }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid rgba(19, 131, 75, 0.28);
+  outline-offset: 2px;
+}
+
+.app-shell {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(109, 172, 113, 0.14), transparent 230px),
+    radial-gradient(circle at 0% 18%, rgba(199, 168, 76, 0.09), transparent 210px),
+    var(--cream);
+  box-shadow: 0 0 50px rgba(16, 54, 29, 0.08);
+}
+
+.screen { min-height: 100vh; padding: 18px clamp(16px, 4vw, 30px) 30px; }
+.eyebrow {
+  color: var(--green-700);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.primary-button, .secondary-button, .small-button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 750;
+  transition: transform 120ms ease, background 120ms ease, opacity 120ms ease;
+}
+.primary-button, .small-button { color: white; background: var(--green-700); }
+.primary-button { width: 100%; padding: 13px 18px; font-size: 1rem; }
+.secondary-button { color: var(--green-800); background: var(--green-100); border: 1px solid var(--green-200); padding: 11px 18px; }
+.small-button { min-height: 42px; padding: 9px 14px; font-size: 0.82rem; }
+.primary-button:not(:disabled):active, .small-button:not(:disabled):active { transform: scale(0.985); }
+.primary-button:disabled, .small-button:disabled { opacity: 0.46; }
+.icon-button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--green-800);
+  background: var(--green-100);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.text-button { border: 0; background: transparent; padding: 10px; font-weight: 750; }
+.text-button--danger { color: var(--danger); }
+
+.notice {
+  margin: 16px 0 0;
+  padding: 13px 14px;
+  border-radius: 12px;
+  color: #345543;
+  background: var(--green-100);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.notice--warm { color: #6d5416; background: #fff7da; }
+.notice--success { color: #0d6838; background: #e9f7ed; }
+.empty-state {
+  padding: 32px 20px;
+  border: 1px dashed #c8d6cb;
+  border-radius: 18px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--surface);
+}
+.empty-state strong { display: block; color: var(--text); font-size: 1.05rem; }
+.empty-state p { margin: 7px 0 0; }
+
+@media (max-width: 380px) {
+  .screen { padding-inline: 13px; }
+  .primary-button { min-height: 46px; }
+}
+
+@media (min-width: 721px) {
+  body { padding: 24px 0; }
+  .app-shell, .screen { min-height: calc(100vh - 48px); }
+  .app-shell { border-radius: 28px; overflow: hidden; }
+}

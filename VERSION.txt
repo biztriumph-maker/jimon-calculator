@@ -1,0 +1,4 @@
+JIMON Codex FINAL
+Updated: 2026-09-21
+Status: ready for first implementation
+Authoritative task: 13_FINAL_CODEX_TASK.md
