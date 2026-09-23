@@ -1,5 +1,6 @@
 import t01Image from '../assets/products/T01_five_stage_set_A.png'
 import { complexProductImages } from '../assets/products/complexImages'
+import { singleProductImages } from '../assets/products/singleImages'
 import type {
   CourierRule,
   DiscountLevel,
@@ -38,7 +39,10 @@ const makeProducts = (type: ProductType, rows: Row[]): Product[] =>
     direction: row[1],
     nameRu: row[2],
     nameZh: row[3],
-    image: row[0] === 'single-01' ? t01Image : (complexProductImages[row[0]] ?? null),
+    image:
+      row[0] === 'single-01'
+        ? t01Image
+        : (singleProductImages[row[0]] ?? complexProductImages[row[0]] ?? null),
     prices: priceMap(row),
     courierRule:
       type === 'single'
@@ -80,7 +84,6 @@ const singleRows: Row[] = [
   ['single-34', 'health', 'Lisiyan — пенящееся очищающее средство', '黎思妍泡泡清洁抑菌液', 199, 183, 167, 151, 135],
   ['single-35', 'health', 'Lisiyan — гель с лизоцимом', '黎思妍溶菌酶黏膜抑菌凝胶', 599, 549, 499, 449, 399],
   ['single-36', 'health', 'Чай с кассией и улуном', '决明乌龙茶', 319, 276, 246, 216, 186],
-  ['single-37', 'beauty', 'Niyouyan — защитный тон-крем (2 коробки)', '逆优妍焕彩凝肤清漾防护精粹素颜乳', 319, 294, 269, 244, 219],
 ]
 
 const bundleRows: Row[] = [

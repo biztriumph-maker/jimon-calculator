@@ -137,10 +137,11 @@ describe('отсутствующая цена', () => {
 })
 
 describe('целостность каталога первой версии', () => {
-  it('содержит 34 единичных товара и 29 комплектов без акций', () => {
-    expect(products.filter((product) => product.type === 'single')).toHaveLength(34)
+  it('содержит 33 единичных товара и 29 комплектов без акций', () => {
+    expect(products.filter((product) => product.type === 'single')).toHaveLength(33)
     expect(products.filter((product) => product.type === 'bundle')).toHaveLength(29)
-    expect(products).toHaveLength(63)
+    expect(products).toHaveLength(62)
+    expect(products.some((product) => product.id === 'single-37')).toBe(false)
     expect(products.some((product) => /5\s*\+\s*1|AI Xiaozhi|BB-кушон/i.test(product.nameRu))).toBe(false)
   })
 
