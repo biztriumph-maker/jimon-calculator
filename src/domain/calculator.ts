@@ -38,29 +38,20 @@ export const getActualPrice = (
 ): number | null => product.prices[level]
 
 export const calculateCourierFee = (
-  product: Product,
   quantity: number,
 ): number => {
   if (!Number.isInteger(quantity) || quantity < 1) {
     throw new RangeError('Количество должно быть целым числом от 1.')
   }
 
-  if (product.type === 'single') {
-    if (quantity > 5) {
-      throw new RangeError(
-        'Для количества более 5 условия курьера требуют уточнения',
-      )
-    }
-    return 12
-  }
-
-  return 12 * quantity
+  return 12
 }
 
 interface OrderCalculationInput {
   order: PlanOrder
   product: Product
   appliedDiscount: DiscountLevel
+  minimumNextDiscount: DiscountLevel
   turnoverBefore: number | null
   automaticUpgrade: boolean
 }
@@ -69,6 +60,7 @@ export const calculateOrder = ({
   order,
   product,
   appliedDiscount,
+  minimumNextDiscount,
   turnoverBefore,
   automaticUpgrade,
 }: OrderCalculationInput): CalculatedOrder => {
@@ -76,7 +68,7 @@ export const calculateOrder = ({
   const retailSubtotal = product.prices[0]! * order.quantity
   const discountedSubtotal =
     unitPrice === null ? null : unitPrice * order.quantity
-  const courierFee = calculateCourierFee(product, order.quantity)
+  const courierFee = calculateCourierFee(order.quantity)
   const total =
     discountedSubtotal === null ? null : discountedSubtotal + courierFee
   const savings =
@@ -85,7 +77,7 @@ export const calculateOrder = ({
     turnoverBefore === null ? null : turnoverBefore + retailSubtotal
   const nextDiscount =
     automaticUpgrade && turnoverAfter !== null
-      ? getDiscountForTurnover(turnoverAfter, appliedDiscount)
+      ? getDiscountForTurnover(turnoverAfter, minimumNextDiscount)
       : appliedDiscount
 
   return {
@@ -125,6 +117,10 @@ export const calculatePlan = (
       order,
       product,
       appliedDiscount: currentDiscount,
+      minimumNextDiscount:
+        start.mode === 'newcomer' && calculated.length === 0
+          ? 10
+          : currentDiscount,
       turnoverBefore: currentTurnover,
       automaticUpgrade,
     })

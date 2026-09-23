@@ -1,7 +1,6 @@
 export type DiscountLevel = 0 | 10 | 20 | 30 | 40 | 50 | 60
 export type ProductType = 'single' | 'bundle'
 export type ProductDirection = 'beauty' | 'health'
-export type CourierRule = 'single-flat-12' | 'bundle-per-unit-12'
 export type UserMode = 'newcomer' | 'partner'
 
 export type PriceMap = Record<DiscountLevel, number | null>
@@ -14,7 +13,6 @@ export interface Product {
   nameZh: string
   image: string | null
   prices: PriceMap
-  courierRule: CourierRule
 }
 
 export interface PlanOrder {

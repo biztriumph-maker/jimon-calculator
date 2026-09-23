@@ -26,7 +26,7 @@ function OrderCard({ order, index, count, onMove, onEdit, onDelete }: {
         <div><dt>Количество</dt><dd>{order.quantity}</dd></div>
         <div><dt>Применена скидка</dt><dd>{order.appliedDiscount}%</dd></div>
         <div><dt>Цена со скидкой, 1 шт.</dt><dd>{order.unitPrice === null ? 'Цена уточняется' : formatMoney(order.unitPrice)}</dd></div>
-        <div><dt>Услуги курьера</dt><dd>{formatMoney(order.courierFee)}</dd></div>
+        <div><dt>Услуги логиста</dt><dd>{formatMoney(order.courierFee)}</dd></div>
         <div className="calculation-list__total"><dt>К оплате</dt><dd>{order.total === null ? 'Цена уточняется' : formatMoney(order.total)}</dd></div>
       </dl>
       {order.nextDiscount > order.appliedDiscount && <p className="notice notice--success">Для следующего заказа доступен уровень скидки — {order.nextDiscount}%.</p>}

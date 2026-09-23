@@ -113,7 +113,6 @@
 .quantity-control { display: grid; grid-template-columns: 46px 58px 46px; align-items: center; width: max-content; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
 .quantity-control button { height: 43px; border: 0; color: var(--green-800); background: var(--green-100); font-size: 1.25rem; }
 .quantity-control strong { text-align: center; }
-.limit-hint { margin: 8px 0 0; color: #8a6514; font-size: .72rem; }
 .calculation-list { display: grid; gap: 0; margin: 6px 0 20px; }
 .calculation-list > div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .calculation-list dt { color: var(--muted); font-size: .8rem; }
