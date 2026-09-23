@@ -15,9 +15,19 @@ export function BrandHeader({ onBack, compact = false, approved = false }: { onB
   )
 }
 
-export function ProductImage({ product, small = false }: { product: Product; small?: boolean }) {
+export function ProductImage({ product, small = false, onClick }: { product: Product; small?: boolean; onClick?: () => void }) {
   if (product.image) {
-    return <img className={`product-image ${small ? 'product-image--small' : ''}`} src={product.image} alt={product.nameRu} />
+    const image = <img className={`product-image ${small ? 'product-image--small' : ''}`} src={product.image} alt={product.nameRu} />
+    return onClick ? (
+      <button
+        type={'button'}
+        className={`product-image-button ${small ? 'product-image-button--small' : ''}`}
+        onClick={onClick}
+        aria-label={`Открыть фотографию товара «${product.nameRu}»`}
+      >
+        {image}
+      </button>
+    ) : image
   }
   return (
     <div className={`product-placeholder ${small ? 'product-placeholder--small' : ''}`} role="img" aria-label={`Фото товара «${product.nameRu}» будет добавлено`}>

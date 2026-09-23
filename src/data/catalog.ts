@@ -1,3 +1,4 @@
+import t01Image from '../assets/products/T01_five_stage_set_A.png'
 import type {
   CourierRule,
   DiscountLevel,
@@ -36,7 +37,7 @@ const makeProducts = (type: ProductType, rows: Row[]): Product[] =>
     direction: row[1],
     nameRu: row[2],
     nameZh: row[3],
-    image: null,
+    image: row[0] === 'single-01' ? t01Image : null,
     prices: priceMap(row),
     courierRule:
       type === 'single'

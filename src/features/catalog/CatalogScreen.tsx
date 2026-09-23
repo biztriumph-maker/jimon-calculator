@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { formatMoney } from '../../app/utils'
 import { BrandHeader, ProductImage } from '../../components/Common'
 import { products } from '../../data/catalog'
@@ -21,11 +21,11 @@ function FilterRow<T extends string>({ label, values, active, onChange }: {
   )
 }
 
-function ProductCard({ product, level, onAdd }: { product: Product; level: DiscountLevel; onAdd: () => void }) {
+function ProductCard({ product, level, onAdd, onOpenImage }: { product: Product; level: DiscountLevel; onAdd: () => void; onOpenImage: () => void }) {
   const price = product.prices[level]
   return (
     <article className="product-card">
-      <ProductImage product={product} />
+      <ProductImage product={product} onClick={product.image ? onOpenImage : undefined} />
       <div className="product-card__content">
         <span className="type-badge">{product.type === 'single' ? 'Единичный товар' : 'Комплект'}</span>
         <h3>{product.nameRu}</h3><p lang="zh">{product.nameZh}</p>
@@ -38,6 +38,31 @@ function ProductCard({ product, level, onAdd }: { product: Product; level: Disco
         </div>
       </div>
     </article>
+  )
+}
+
+function ProductImageModal({ product, onClose }: { product: Product; onClose: () => void }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [onClose])
+
+  return (
+    <div className={'product-image-modal-backdrop'} role={'presentation'}>
+      <section className={'product-image-modal'} role={'dialog'} aria-modal={'true'} aria-labelledby={'product-image-modal-title'}>
+        <button type={'button'} className={'product-image-modal__close'} onClick={onClose} aria-label={'Закрыть'}>×</button>
+        <img className={'product-image-modal__image'} src={product.image!} alt={product.nameRu} />
+        <p id={'product-image-modal-title'}>{product.nameRu}</p>
+      </section>
+    </div>
   )
 }
 
@@ -61,6 +86,7 @@ export function CatalogScreen({ start, orders, onHome, onEditPartner, onAddProdu
   const [search, setSearch] = useState('')
   const [type, setType] = useState<'all' | ProductType>('all')
   const [direction, setDirection] = useState<'all' | ProductDirection>('all')
+  const [imageModalProduct, setImageModalProduct] = useState<Product | null>(null)
   const plan = start ? calculatePlan(orders, start) : null
   const level = plan?.finalDiscount ?? start?.discount ?? 0
   const query = search.trim().toLocaleLowerCase('ru')
@@ -83,10 +109,19 @@ export function CatalogScreen({ start, orders, onHome, onEditPartner, onAddProdu
       <div className="catalog-meta"><span>Доступно позиций: {filtered.length}</span><span>Цена следующего заказа: {level}%</span></div>
       <section className="product-list" aria-live="polite">
         {filtered.length
-          ? filtered.map((product) => <ProductCard key={product.id} product={product} level={level} onAdd={() => onAddProduct(product)} />)
+          ? filtered.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              level={level}
+              onAdd={() => onAddProduct(product)}
+              onOpenImage={() => setImageModalProduct(product)}
+            />
+          ))
           : <div className="empty-state"><strong>Ничего не найдено</strong><p>Измените поиск или фильтры.</p></div>}
       </section>
       <div className="sticky-plan"><button className="primary-button" onClick={onOpenPlan}>План покупок · {orders.length} <span aria-hidden="true">→</span></button></div>
+      {imageModalProduct && <ProductImageModal product={imageModalProduct} onClose={() => setImageModalProduct(null)} />}
     </main>
   )
 }
