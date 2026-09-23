@@ -45,7 +45,7 @@ export interface CalculatedOrder extends PlanOrder {
 export interface PlanCalculation {
   orders: CalculatedOrder[]
   total: number | null
-  savings: number
+  savings: number | null
   courierTotal: number
   finalDiscount: DiscountLevel
   finalTurnover: number | null

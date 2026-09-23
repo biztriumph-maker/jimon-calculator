@@ -139,10 +139,9 @@ export const calculatePlan = (
     total: hasUnavailablePrices
       ? null
       : calculated.reduce((sum, order) => sum + (order.total ?? 0), 0),
-    savings: calculated.reduce(
-      (sum, order) => sum + (order.savings ?? 0),
-      0,
-    ),
+    savings: hasUnavailablePrices
+      ? null
+      : calculated.reduce((sum, order) => sum + (order.savings ?? 0), 0),
     courierTotal: calculated.reduce(
       (sum, order) => sum + order.courierFee,
       0,

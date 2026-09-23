@@ -48,6 +48,28 @@ describe('уровни скидок', () => {
 })
 
 describe('последовательный план', () => {
+  it('сохраняет стартовые 0 ¥ и 0% новичка и считает итоговый товарооборот', () => {
+    const result = calculatePlan(
+      [order('first', 'single-03', 2)],
+      { mode: 'newcomer', discount: 0, turnover: 0 },
+    )
+
+    expect(result.orders[0].turnoverBefore).toBe(0)
+    expect(result.orders[0].appliedDiscount).toBe(0)
+    expect(result.finalTurnover).toBe(638)
+  })
+
+  it('сохраняет стартовые данные партнёра и добавляет retail turnover заказов', () => {
+    const result = calculatePlan(
+      [order('first', 'single-03', 2)],
+      { mode: 'partner', discount: 30, turnover: 10000 },
+    )
+
+    expect(result.orders[0].turnoverBefore).toBe(10000)
+    expect(result.orders[0].appliedDiscount).toBe(30)
+    expect(result.finalTurnover).toBe(10638)
+  })
+
   it('после первого заказа 319 ¥ второй заказ новичка получает минимум 10%', () => {
     const result = calculatePlan(
       [
@@ -119,6 +141,7 @@ describe('последовательный план', () => {
     expect(result.orders.every((item) => item.appliedDiscount === 30)).toBe(
       true,
     )
+    expect(result.orders[0].turnoverBefore).toBeNull()
     expect(result.finalTurnover).toBeNull()
   })
 
@@ -138,6 +161,17 @@ describe('последовательный план', () => {
     expect(after.orders.map((item) => item.productId)).toEqual(['single-01', 'single-03', 'single-03'])
     expect(after.orders.map((item) => item.appliedDiscount)).toEqual([0, 20, 20])
     expect(after.total).not.toBe(before.total)
+  })
+})
+
+describe('экономия плана', () => {
+  it('суммирует только разницу retail и фактической цены без логистики', () => {
+    const result = calculatePlan(
+      [order('discounted', 'single-03', 2)],
+      { mode: 'partner', discount: 30, turnover: 10000 },
+    )
+
+    expect(result.savings).toBe((319 - 225) * 2)
   })
 })
 
@@ -177,6 +211,7 @@ describe('отсутствующая цена', () => {
     expect(result.orders[0].unitPrice).toBeNull()
     expect(result.orders[0].priceAvailable).toBe(false)
     expect(result.total).toBeNull()
+    expect(result.savings).toBeNull()
     expect(result.hasUnavailablePrices).toBe(true)
   })
 })

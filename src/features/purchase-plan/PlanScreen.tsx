@@ -45,6 +45,8 @@ export function PlanScreen({ start, orders, onBack, onMove, onEdit, onDelete }: 
 }) {
   const plan = calculatePlan(orders, start)
   const orderWord = orders.length === 1 ? 'отдельный заказ' : 'отдельных заказа'
+  const startTurnover = start.mode === 'newcomer' ? 0 : start.turnover
+  const startDiscount = start.mode === 'newcomer' ? 0 : start.discount
   return (
     <main className="screen plan-screen">
       <BrandHeader onBack={onBack} compact />
@@ -61,7 +63,10 @@ export function PlanScreen({ start, orders, onBack, onMove, onEdit, onDelete }: 
           <h2>Итог плана</h2>
           <dl>
             <div><dt>Итого к оплате</dt><dd>{plan.total === null ? 'Цена уточняется' : formatMoney(plan.total)}</dd></div>
-            <div><dt>Экономия благодаря скидке</dt><dd>{formatMoney(plan.savings)}</dd></div>
+            <div><dt>Экономия благодаря скидке</dt><dd>{plan.savings === null ? 'Цена уточняется' : formatMoney(plan.savings)}</dd></div>
+            <div><dt>Стартовый товарооборот</dt><dd>{startTurnover === null ? 'Не указан' : formatMoney(startTurnover)}</dd></div>
+            <div><dt>Итоговый товарооборот</dt><dd>{plan.finalTurnover === null ? 'Не рассчитывается' : formatMoney(plan.finalTurnover)}</dd></div>
+            <div><dt>Стартовый уровень скидки</dt><dd>{startDiscount}%</dd></div>
           </dl>
           <p>Ваш уровень для следующих покупок:<strong>{plan.finalDiscount}%</strong></p>
         </section>
