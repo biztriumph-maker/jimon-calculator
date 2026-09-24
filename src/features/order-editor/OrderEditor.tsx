@@ -31,7 +31,7 @@ export function OrderEditor({ product, editOrder, orders, start, onSave, onClose
   const calculated = calculatePlan(previewOrders, start).orders.find((order) => order.id === draftId)!
 
   return (
-    <div className={`modal-backdrop modal-backdrop--sheet${editOrder ? ' modal-backdrop--order-edit' : ''}`} role='presentation'>
+    <div className='modal-backdrop modal-backdrop--sheet modal-backdrop--order-edit' role='presentation'>
       <section className='modal order-editor' role='dialog' aria-modal='true' aria-labelledby='order-editor-title'>
         <div className='modal__heading'>
           <div><span className='eyebrow'>{editOrder ? 'Изменение заказа' : 'Добавление товара'}</span><h2 id='order-editor-title'>{product.nameRu}</h2><p lang='zh'>{product.nameZh}</p></div>
