@@ -104,6 +104,16 @@
 
 .modal-backdrop--sheet { place-items: end center; padding: 0; }
 .order-editor { width: min(100%,720px); max-height: 92dvh; border-radius: 24px 24px 0 0; padding-bottom: max(22px,env(safe-area-inset-bottom)); }
+.modal-backdrop--order-edit {
+  height: 100dvh;
+  place-items: center;
+  padding: calc(18px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));
+}
+.modal-backdrop--order-edit .order-editor {
+  max-height: 100%;
+  border-radius: 24px;
+  padding-bottom: 22px;
+}
 .order-editor__product { display: flex; gap: 13px; align-items: center; margin: 18px 0; padding: 12px; border-radius: 15px; background: var(--surface-muted); }
 .order-editor__product span, .order-editor__product strong, .order-editor__product small { display: block; }
 .order-editor__product span, .order-editor__product small { color: var(--muted); font-size: .72rem; }
