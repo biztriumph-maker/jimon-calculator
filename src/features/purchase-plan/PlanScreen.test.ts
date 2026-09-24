@@ -26,8 +26,8 @@ const renderSummary = (
 describe('итог плана', () => {
   it('показывает неизвестную общую экономию как цену, которая уточняется', () => {
     const summary = renderSummary(
-      { mode: 'partner', discount: 10, turnover: 331 },
-      [{ id: 'missing-price', productId: 'bundle-29', quantity: 1 }],
+      { mode: 'partner', discount: 50, turnover: 220000 },
+      [{ id: 'missing-price', productId: 'single-03', quantity: 1 }],
     )
 
     expect(summary).toContain(

@@ -202,10 +202,10 @@ describe('услуги логиста', () => {
 
 describe('отсутствующая цена', () => {
   it('помечает заказ недоступным и не придумывает итог', () => {
-    const result = calculatePlan([order('a', 'bundle-29')], {
+    const result = calculatePlan([order('a', 'single-03')], {
       mode: 'partner',
-      discount: 10,
-      turnover: 331,
+      discount: 50,
+      turnover: 220000,
     })
 
     expect(result.orders[0].unitPrice).toBeNull()
@@ -217,11 +217,12 @@ describe('отсутствующая цена', () => {
 })
 
 describe('целостность каталога первой версии', () => {
-  it('содержит 33 единичных товара и 29 комплектов без акций', () => {
+  it('содержит 33 единичных товара и 28 комплектов без акций', () => {
     expect(products.filter((product) => product.type === 'single')).toHaveLength(33)
-    expect(products.filter((product) => product.type === 'bundle')).toHaveLength(29)
-    expect(products).toHaveLength(62)
+    expect(products.filter((product) => product.type === 'bundle')).toHaveLength(28)
+    expect(products).toHaveLength(61)
     expect(products.some((product) => product.id === 'single-37')).toBe(false)
+    expect(products.some((product) => product.id === 'bundle-29')).toBe(false)
     expect(products.some((product) => /5\s*\+\s*1|AI Xiaozhi|BB-кушон/i.test(product.nameRu))).toBe(false)
   })
 
