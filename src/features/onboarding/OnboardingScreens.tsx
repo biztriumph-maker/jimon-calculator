@@ -1,14 +1,89 @@
 import { BrandHeader } from '../../components/Common'
 import { UiIcon } from '../../components/Icons'
 import homeApprovedReference from '../../assets/ui/home/home-approved-reference-cropped-2x.png'
+import productInfoApproved from '../../assets/ui/product-info/product-info-approved.png'
 import newcomerFoliageApproved from '../../assets/ui/onboarding/newcomer-foliage-approved-v3.png'
+import { HealthDirectionCard } from './HealthDirectionCard'
+import { getVisibleHealthDirections } from './healthDirections'
 
-export function HomeScreen({ onNewcomer, onPartner }: { onNewcomer: () => void; onPartner: () => void }) {
+export function HomeScreen({ onProductInfo, onNewcomer, onPartner }: { onProductInfo: () => void; onNewcomer: () => void; onPartner: () => void }) {
   return (
     <main className="screen home-screen">
-      <img className="home-approved-reference" src={homeApprovedReference} alt="" aria-hidden="true" />
-      <button className="home-hit-area home-hit-area--newcomer" aria-label="Я новичок" onClick={onNewcomer} />
-      <button className="home-hit-area home-hit-area--partner" aria-label="Я партнёр" onClick={onPartner} />
+      <div className="home-artwork">
+        <img className="home-approved-reference" src={homeApprovedReference} alt="" aria-hidden="true" />
+        <button className="home-hit-area home-hit-area--product-info" aria-label="О продукции JIMON" onClick={onProductInfo} />
+        <button className="home-hit-area home-hit-area--newcomer" aria-label="Я новичок" onClick={onNewcomer} />
+        <button className="home-hit-area home-hit-area--partner" aria-label="Я партнёр" onClick={onPartner} />
+      </div>
+    </main>
+  )
+}
+
+export function ProductInfoScreen({
+  onBack,
+  onHealth,
+  onBeauty,
+}: {
+  onBack: () => void
+  onHealth: () => void
+  onBeauty: () => void
+}) {
+  return (
+    <main className="screen product-info-screen">
+      <div className="product-info-artwork">
+        <img className="product-info-approved-reference" src={productInfoApproved} alt="" aria-hidden="true" />
+        <button className="product-info-hit-area product-info-hit-area--back" aria-label="Назад на главную" onClick={onBack} />
+        <button className="product-info-hit-area product-info-hit-area--health" aria-label="Здоровье" onClick={onHealth} />
+        <button className="product-info-hit-area product-info-hit-area--beauty" aria-label="Красота" onClick={onBeauty} />
+      </div>
+    </main>
+  )
+}
+
+export function ProductHealthScreen({
+  onBack,
+  onSelectDirection,
+}: {
+  onBack: () => void
+  onSelectDirection: (directionId: string) => void
+}) {
+  const directions = getVisibleHealthDirections()
+
+  return (
+    <main className="screen product-health-screen">
+      <BrandHeader onBack={onBack} compact approved />
+      <section className="product-health-content">
+        <header className="product-health-heading">
+          <h1>Здоровье</h1>
+          <p>Выберите интересующее направление</p>
+        </header>
+        <div className="health-direction-list">
+          {directions.map((direction) => (
+            <div className="health-direction-list__item" key={direction.id}>
+              <HealthDirectionCard direction={direction} onSelect={onSelectDirection} />
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  )
+}
+
+export function ProductDirectionScreen({
+  title,
+  onBack,
+}: {
+  title: string
+  onBack: () => void
+}) {
+  return (
+    <main className="screen product-direction-screen">
+      <BrandHeader onBack={onBack} compact approved />
+      <section className="intro">
+        <span className="eyebrow">О продукции JIMON</span>
+        <h1>{title}</h1>
+        <p className="intro__lead">Раздел подготовлен для следующего этапа разработки.</p>
+      </section>
     </main>
   )
 }

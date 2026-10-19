@@ -1,0 +1,60 @@
+import { describe, expect, it } from 'vitest'
+import {
+  getVisibleHealthDirections,
+  healthDirections,
+  type HealthDirectionConfig,
+} from './healthDirections'
+
+describe('health direction configuration', () => {
+  it('applies title, description and image edits from configuration', () => {
+    const edited = healthDirections.map((direction) =>
+      direction.id === 'vision'
+        ? {
+            ...direction,
+            title: 'Проверочное название',
+            description: 'Проверочное описание',
+            image: '/edited-image.png',
+          }
+        : { ...direction },
+    )
+
+    const first = getVisibleHealthDirections(edited)[0]
+
+    expect(first.title).toBe('Проверочное название')
+    expect(first.description).toBe('Проверочное описание')
+    expect(first.image).toBe('/edited-image.png')
+  })
+
+  it('supports reordering, adding and hiding cards without component changes', () => {
+    const reordered = healthDirections.map((direction) => {
+      if (direction.id === 'vision') return { ...direction, order: 3 }
+      if (direction.id === 'joints') return { ...direction, order: 1 }
+      return { ...direction }
+    })
+    const temporary: HealthDirectionConfig = {
+      ...healthDirections[0],
+      id: 'temporary-check',
+      title: 'Временная карточка',
+      order: 2.5,
+    }
+    const hidden = [...reordered, temporary].map((direction) =>
+      direction.id === 'heart' ? { ...direction, visible: false } : direction,
+    )
+
+    const result = getVisibleHealthDirections(hidden)
+
+    expect(result[0].id).toBe('joints')
+    expect(result[1].id).toBe('temporary-check')
+    expect(result.some((direction) => direction.id === 'heart')).toBe(false)
+    expect(healthDirections.map((direction) => direction.id)).toEqual([
+      'vision',
+      'heart',
+      'joints',
+      'digestion',
+      'weight',
+      'energy',
+      'respiratory',
+      'other',
+    ])
+  })
+})

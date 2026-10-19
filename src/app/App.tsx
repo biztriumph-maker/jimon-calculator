@@ -4,7 +4,14 @@ import { products } from '../data/catalog'
 import { moveOrder } from '../domain/calculator'
 import type { CalculationStart, PlanOrder, Product } from '../domain/types'
 import { CatalogScreen } from '../features/catalog/CatalogScreen'
-import { NewcomerScreen, HomeScreen } from '../features/onboarding/OnboardingScreens'
+import {
+  HomeScreen,
+  NewcomerScreen,
+  ProductDirectionScreen,
+  ProductHealthScreen,
+  ProductInfoScreen,
+} from '../features/onboarding/OnboardingScreens'
+import { healthDirectionById, healthDirectionByScreen } from '../features/onboarding/healthDirections'
 import { OrderEditor } from '../features/order-editor/OrderEditor'
 import { PartnerModal } from '../features/partner/PartnerModal'
 import { PlanScreen } from '../features/purchase-plan/PlanScreen'
@@ -17,6 +24,7 @@ export default function App() {
   const [orders, setOrders] = useState<PlanOrder[]>(initial.orders)
   const [partnerModalOpen, setPartnerModalOpen] = useState(false)
   const [editor, setEditor] = useState<{ product: Product; order: PlanOrder | null } | null>(null)
+  const healthDirection = healthDirectionByScreen.get(screen)
 
   useEffect(() => saveAppState({ screen, start, orders }), [screen, start, orders])
 
@@ -29,6 +37,11 @@ export default function App() {
     setOrders([])
     setStart(null)
     setScreen('newcomer')
+  }
+  const chooseProductInfo = () => {
+    setScreen('product-info')
+    setPartnerModalOpen(false)
+    setEditor(null)
   }
   const choosePartner = () => {
     setOrders([])
@@ -48,7 +61,32 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {screen === 'home' && <HomeScreen onNewcomer={chooseNewcomer} onPartner={choosePartner} />}
+      {screen === 'home' && <HomeScreen onProductInfo={chooseProductInfo} onNewcomer={chooseNewcomer} onPartner={choosePartner} />}
+      {screen === 'product-info' && (
+        <ProductInfoScreen
+          onBack={goHome}
+          onHealth={() => setScreen('product-health')}
+          onBeauty={() => setScreen('product-beauty')}
+        />
+      )}
+      {screen === 'product-health' && (
+        <ProductHealthScreen
+          onBack={() => setScreen('product-info')}
+          onSelectDirection={(directionId) => {
+            const direction = healthDirectionById.get(directionId)
+            if (direction) setScreen(direction.screen)
+          }}
+        />
+      )}
+      {screen === 'product-beauty' && (
+        <ProductDirectionScreen title="Красота" onBack={() => setScreen('product-info')} />
+      )}
+      {healthDirection && (
+        <ProductDirectionScreen
+          title={healthDirection.title}
+          onBack={() => setScreen('product-health')}
+        />
+      )}
       {screen === 'newcomer' && (
         <NewcomerScreen onBack={goHome} onContinue={() => {
           setStart({ mode: 'newcomer', discount: 0, turnover: 0 })
