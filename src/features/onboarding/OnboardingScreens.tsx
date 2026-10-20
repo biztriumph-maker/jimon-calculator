@@ -3,7 +3,9 @@ import { UiIcon } from '../../components/Icons'
 import homeApprovedReference from '../../assets/ui/home/home-approved-reference-cropped-2x.png'
 import productInfoApproved from '../../assets/ui/product-info/product-info-approved.png'
 import newcomerFoliageApproved from '../../assets/ui/onboarding/newcomer-foliage-approved-v3.png'
-import { HealthDirectionCard } from './HealthDirectionCard'
+import { DirectionCard } from './DirectionCard'
+import { getVisibleBeautyDirections } from './beautyDirections'
+import type { DirectionConfig, DirectionTheme } from './directionTypes'
 import { getVisibleHealthDirections } from './healthDirections'
 
 export function HomeScreen({ onProductInfo, onNewcomer, onPartner }: { onProductInfo: () => void; onNewcomer: () => void; onPartner: () => void }) {
@@ -47,20 +49,62 @@ export function ProductHealthScreen({
   onBack: () => void
   onSelectDirection: (directionId: string) => void
 }) {
-  const directions = getVisibleHealthDirections()
+  return (
+    <DirectionSelectionScreen
+      title="Здоровье"
+      directions={getVisibleHealthDirections()}
+      theme="health"
+      onBack={onBack}
+      onSelectDirection={onSelectDirection}
+    />
+  )
+}
+
+export function ProductBeautyScreen({
+  onBack,
+  onSelectDirection,
+}: {
+  onBack: () => void
+  onSelectDirection: (directionId: string) => void
+}) {
+  return (
+    <DirectionSelectionScreen
+      title="Красота"
+      directions={getVisibleBeautyDirections()}
+      theme="beauty"
+      onBack={onBack}
+      onSelectDirection={onSelectDirection}
+    />
+  )
+}
+
+function DirectionSelectionScreen({
+  title,
+  directions,
+  theme,
+  onBack,
+  onSelectDirection,
+}: {
+  title: string
+  directions: readonly DirectionConfig[]
+  theme: DirectionTheme
+  onBack: () => void
+  onSelectDirection: (directionId: string) => void
+}) {
+  const themeClass = theme === 'beauty' ? ' product-beauty-screen' : ''
 
   return (
-    <main className="screen product-health-screen">
+    <main className={`screen product-health-screen${themeClass}`}>
       <BrandHeader onBack={onBack} compact approved />
       <section className="product-health-content">
         <header className="product-health-heading">
-          <h1>Здоровье</h1>
+          <h1>{title}</h1>
           <p>Выберите интересующее направление</p>
         </header>
         <div className="health-direction-list">
           {directions.map((direction) => (
             <div className="health-direction-list__item" key={direction.id}>
-              <HealthDirectionCard direction={direction} onSelect={onSelectDirection} />
+              <DirectionCard direction={direction} onSelect={onSelectDirection} theme={theme} />
             </div>
           ))}
         </div>

@@ -7,11 +7,13 @@ import { CatalogScreen } from '../features/catalog/CatalogScreen'
 import {
   HomeScreen,
   NewcomerScreen,
+  ProductBeautyScreen,
   ProductDirectionScreen,
   ProductHealthScreen,
   ProductInfoScreen,
 } from '../features/onboarding/OnboardingScreens'
 import { healthDirectionById, healthDirectionByScreen } from '../features/onboarding/healthDirections'
+import { beautyDirectionById, beautyDirectionByScreen } from '../features/onboarding/beautyDirections'
 import { OrderEditor } from '../features/order-editor/OrderEditor'
 import { PartnerModal } from '../features/partner/PartnerModal'
 import { PlanScreen } from '../features/purchase-plan/PlanScreen'
@@ -25,6 +27,7 @@ export default function App() {
   const [partnerModalOpen, setPartnerModalOpen] = useState(false)
   const [editor, setEditor] = useState<{ product: Product; order: PlanOrder | null } | null>(null)
   const healthDirection = healthDirectionByScreen.get(screen)
+  const beautyDirection = beautyDirectionByScreen.get(screen)
 
   useEffect(() => saveAppState({ screen, start, orders }), [screen, start, orders])
 
@@ -79,12 +82,24 @@ export default function App() {
         />
       )}
       {screen === 'product-beauty' && (
-        <ProductDirectionScreen title="Красота" onBack={() => setScreen('product-info')} />
+        <ProductBeautyScreen
+          onBack={() => setScreen('product-info')}
+          onSelectDirection={(directionId) => {
+            const direction = beautyDirectionById.get(directionId)
+            if (direction) setScreen(direction.screen)
+          }}
+        />
       )}
       {healthDirection && (
         <ProductDirectionScreen
           title={healthDirection.title}
           onBack={() => setScreen('product-health')}
+        />
+      )}
+      {beautyDirection && (
+        <ProductDirectionScreen
+          title={beautyDirection.title}
+          onBack={() => setScreen('product-beauty')}
         />
       )}
       {screen === 'newcomer' && (

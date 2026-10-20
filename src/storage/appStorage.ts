@@ -13,6 +13,12 @@ export type Screen =
   | 'product-health-respiratory'
   | 'product-health-other'
   | 'product-beauty'
+  | 'product-beauty-cleansing'
+  | 'product-beauty-hydration'
+  | 'product-beauty-anti-aging'
+  | 'product-beauty-eye-care'
+  | 'product-beauty-inner-beauty'
+  | 'product-beauty-comprehensive-care'
   | 'newcomer'
   | 'catalog'
   | 'plan'
@@ -45,6 +51,12 @@ export const loadAppState = (): StoredAppState => {
       'product-health-respiratory',
       'product-health-other',
       'product-beauty',
+      'product-beauty-cleansing',
+      'product-beauty-hydration',
+      'product-beauty-anti-aging',
+      'product-beauty-eye-care',
+      'product-beauty-inner-beauty',
+      'product-beauty-comprehensive-care',
       'newcomer',
       'catalog',
       'plan',

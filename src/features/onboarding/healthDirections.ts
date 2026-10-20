@@ -1,4 +1,5 @@
 import type { Screen } from '../../storage/appStorage'
+import type { DirectionConfig } from './directionTypes'
 import digestionImage from '../../assets/ui/product-health/directions/digestion.png'
 import energyImage from '../../assets/ui/product-health/directions/energy.png'
 import heartImage from '../../assets/ui/product-health/directions/heart.png'
@@ -8,16 +9,7 @@ import respiratoryImage from '../../assets/ui/product-health/directions/respirat
 import visionImage from '../../assets/ui/product-health/directions/vision.png'
 import weightImage from '../../assets/ui/product-health/directions/weight.png'
 
-export interface HealthDirectionConfig {
-  id: string
-  title: string
-  description: string
-  image: string
-  imageStatus: 'approved' | 'approved-extract' | 'placeholder'
-  order: number
-  screen: Screen
-  visible: boolean
-}
+export type HealthDirectionConfig = DirectionConfig
 
 export const healthDirections: readonly HealthDirectionConfig[] = [
   { id: 'vision', title: 'Зрение', description: 'Чёткость взгляда в любом возрасте', image: visionImage, imageStatus: 'approved-extract', order: 1, screen: 'product-health-vision', visible: true },

@@ -653,8 +653,9 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 57%) minmax(0, 43%);
+  grid-template-rows: 116px;
   width: 100%;
-  min-height: 116px;
+  height: 116px;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -700,6 +701,7 @@
   position: relative;
   grid-column: 2;
   min-width: 0;
+  min-height: 0;
   height: 100%;
   overflow: hidden;
 }
@@ -707,9 +709,15 @@
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 116px;
+  min-height: 0;
   object-fit: cover;
   object-position: center;
+}
+.health-direction-card[data-direction-id='vision'] .health-direction-card__media img {
+  object-position: 20% center;
+}
+.health-direction-card[data-direction-id='digestion'] .health-direction-card__media img {
+  object-position: 78% center;
 }
 .health-direction-card[data-direction-id='respiratory'] .health-direction-card__media img {
   object-position: center 74%;
@@ -725,11 +733,11 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  color: #082c1b;
+  color: var(--direction-arrow-color, #082c1b);
   font-size: 2.25rem;
   font-weight: 400;
   line-height: 1;
-  background: var(--green-100);
+  background: var(--direction-arrow-background, var(--green-100));
   box-shadow: 0 3px 12px rgba(25, 65, 37, .12);
 }
 .health-direction-card:focus { outline: none; }
@@ -738,13 +746,39 @@
   outline-offset: 3px;
 }
 .health-direction-card:active { transform: scale(.992); }
+.product-beauty-screen {
+  background:
+    radial-gradient(circle at 88% 8%, rgba(233, 194, 205, .24), transparent 190px),
+    linear-gradient(180deg, #fff 0%, #fffafc 72%, #fbf3f6 100%);
+}
+.health-direction-card--beauty {
+  --direction-arrow-background: #f1d8df;
+  --direction-arrow-color: #6b263d;
+}
+.health-direction-card--beauty .health-direction-card__copy {
+  padding-block: 11px;
+}
+.health-direction-card--beauty .health-direction-card__copy strong {
+  font-size: clamp(.98rem, 4.4vw, 1.22rem);
+  line-height: 1.08;
+}
+.health-direction-card--beauty .health-direction-card__copy small {
+  margin-top: 5px;
+  font-size: clamp(.72rem, 3.1vw, .88rem);
+  line-height: 1.2;
+}
+.health-direction-card--beauty[data-direction-id='cleansing'] .health-direction-card__media img { object-position: 92% center; }
+.health-direction-card--beauty[data-direction-id='hydration'] .health-direction-card__media img { object-position: 88% center; }
+.health-direction-card--beauty[data-direction-id='anti-aging'] .health-direction-card__media img { object-position: 94% center; }
+.health-direction-card--beauty[data-direction-id='eye-care'] .health-direction-card__media img { object-position: 90% center; }
+.health-direction-card--beauty[data-direction-id='inner-beauty'] .health-direction-card__media img { object-position: 94% center; }
+.health-direction-card--beauty[data-direction-id='comprehensive-care'] .health-direction-card__media img { object-position: 96% center; }
 @media (max-width: 340px) {
   .screen.product-health-screen { padding-inline: 12px; }
   .product-health-content { padding-top: 10px; }
   .product-health-heading { margin-bottom: 13px; }
   .health-direction-list { gap: 10px; }
-  .health-direction-card { min-height: 108px; grid-template-columns: minmax(0, 61%) minmax(0, 39%); }
-  .health-direction-card__media img { min-height: 108px; }
+  .health-direction-card { grid-template-columns: minmax(0, 61%) minmax(0, 39%); grid-template-rows: 108px; height: 108px; }
   .health-direction-card__copy { padding-left: 14px; }
   .health-direction-card__arrow { left: calc(61% + 20px); width: 40px; height: 40px; }
 }
