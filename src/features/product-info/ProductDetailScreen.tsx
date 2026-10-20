@@ -182,18 +182,6 @@ export function ProductDetailScreen({ config, onBack }: ProductDetailScreenProps
           {product.nameZh && <p lang="zh-CN">{product.nameZh}</p>}
         </header>
 
-        <section className="product-detail-summary" lang="ru">
-          <p className="product-detail-summary__intro">{config.summary.intro}</p>
-          <h2>{config.summary.propertiesTitle}</h2>
-          <ol>
-            {config.summary.properties.map((property) => (
-              <li key={property.text} data-verification-status={property.verificationStatus}>
-                {property.text}
-              </li>
-            ))}
-          </ol>
-        </section>
-
         <div className="product-detail-actions" aria-label="Информация о продукте">
           {config.sections.map((section) => (
             <button
@@ -210,6 +198,18 @@ export function ProductDetailScreen({ config, onBack }: ProductDetailScreenProps
             </button>
           ))}
         </div>
+
+        <section className="product-detail-summary" lang="ru">
+          <p className="product-detail-summary__intro">{config.summary.intro}</p>
+          <h2>{config.summary.propertiesTitle}</h2>
+          <ol>
+            {config.summary.properties.map((property) => (
+              <li key={property.text} data-verification-status={property.verificationStatus}>
+                {property.text}
+              </li>
+            ))}
+          </ol>
+        </section>
       </article>
 
       {activeSection && (
