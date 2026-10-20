@@ -17,6 +17,9 @@ import { beautyDirectionById, beautyDirectionByScreen } from '../features/onboar
 import { OrderEditor } from '../features/order-editor/OrderEditor'
 import { PartnerModal } from '../features/partner/PartnerModal'
 import { PlanScreen } from '../features/purchase-plan/PlanScreen'
+import { ProductDirectionProductsScreen } from '../features/product-info/ProductDirectionProductsScreen'
+import { ProductDetailScreen } from '../features/product-info/ProductDetailScreen'
+import { informationProductDetailById, informationProductDetailByScreen } from '../features/product-info/productDetails'
 import { loadAppState, saveAppState, type Screen } from '../storage/appStorage'
 
 export default function App() {
@@ -28,6 +31,7 @@ export default function App() {
   const [editor, setEditor] = useState<{ product: Product; order: PlanOrder | null } | null>(null)
   const healthDirection = healthDirectionByScreen.get(screen)
   const beautyDirection = beautyDirectionByScreen.get(screen)
+  const informationProductDetail = informationProductDetailByScreen.get(screen)
 
   useEffect(() => saveAppState({ screen, start, orders }), [screen, start, orders])
 
@@ -90,7 +94,26 @@ export default function App() {
           }}
         />
       )}
-      {healthDirection && (
+      {healthDirection?.id === 'digestion' && (
+        <ProductDirectionProductsScreen
+          directionId="digestion"
+          title={healthDirection.title}
+          onBack={() => setScreen('product-health')}
+          onOpenProduct={(product) => {
+            const detail = informationProductDetailById.get(product.id)
+            if (!detail) return false
+            setScreen(detail.screen)
+            return true
+          }}
+        />
+      )}
+      {informationProductDetail && (
+        <ProductDetailScreen
+          config={informationProductDetail}
+          onBack={() => setScreen('product-health-digestion')}
+        />
+      )}
+      {healthDirection && healthDirection.id !== 'digestion' && (
         <ProductDirectionScreen
           title={healthDirection.title}
           onBack={() => setScreen('product-health')}
