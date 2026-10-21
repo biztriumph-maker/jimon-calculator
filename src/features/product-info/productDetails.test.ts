@@ -237,3 +237,108 @@ describe('Xian Yun You product detail', () => {
     expect(serialized).not.toContain('курс')
   })
 })
+
+describe('Liver peptide turmeric product detail', () => {
+  it('connects single-18 to its canonical catalog product and dedicated hero', () => {
+    const detail = informationProductDetailById.get('single-18')
+    const product = productById.get('single-18')
+
+    expect(detail?.screen).toBe('product-health-digestion-liver-peptide-turmeric')
+    expect(product?.nameRu).toBe('Напиток для поддержки печени с пептидами и куркумой')
+    expect(product?.nameZh).toBe('添然萃肝蛋白肽姜黄饮')
+    expect(product?.image).toContain('T18_napitok_dlya_podderzhki_pecheni_s_kurkumoy')
+    expect(product?.prices).toEqual({
+      0: 599,
+      10: 549,
+      20: 499,
+      30: 449,
+      40: 399,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/pechen-peptidy-kurkuma-detail.png',
+      alt: 'Упаковка напитка для поддержки печени с пептидами и куркумой',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the approved introduction and seven team observations in order', () => {
+    const summary = informationProductDetailById.get('single-18')?.summary
+
+    expect(summary?.intro).toBe(
+      'Напиток для поддержки печени с пептидами и куркумой — растительный напиток JIMON, сочетающий пептиды печени, куркуму и комплекс растительных компонентов. Выпускается в удобных порционных саше для ежедневного употребления.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Поддерживает работу печени.',
+      'Способствует очищению организма.',
+      'Обладает противовоспалительными и противоопухолевыми свойствами.',
+      'Улучшает обмен веществ.',
+      'Укрепляет иммунитет.',
+      'Снимает усталость.',
+      'Помогает восстановлению организма.',
+    ])
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the approved facts and nine main components', () => {
+    const detail = informationProductDetailById.get('single-18')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      { label: 'Название', value: 'Напиток для поддержки печени с пептидами и куркумой' },
+      { label: 'Форма выпуска', value: 'Растительный напиток в порционных саше.' },
+      { label: 'Количество', value: '20 саше.' },
+      { label: 'Объём одного саше', value: '25 мл.' },
+      { label: 'Общий объём', value: '500 мл.' },
+      { label: 'Срок хранения', value: '18 месяцев.' },
+      { label: 'Категория', value: 'Растительный пищевой напиток JIMON.' },
+      { label: 'Хранение', value: 'В сухом, защищённом от прямого света месте.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Пептиды белков печени — 0,3 мг на саше.',
+      'Куркума — 375 мг на саше.',
+      'Концентрированный сок розы Роксбурга (колючей груши).',
+      'Порошок сока опунции (кактусовой груши).',
+      'Концентрированный порошок артишока.',
+      'Порошок семян ховении сладкой.',
+      'Порошок травы пентхорума китайского.',
+      'Порошок корня кудзу (пуэрарии).',
+      'Порошок кукурузных рылец.',
+    ])
+
+    const serialized = JSON.stringify(composition)
+    expect(serialized).not.toContain('Эритритол')
+    expect(serialized).not.toContain('L-арабиноза')
+    expect(serialized).not.toContain('Пищевые ароматизаторы')
+  })
+
+  it('uses the shared usage and restrictions structure without an extra section', () => {
+    const usage = informationProductDetailById
+      .get('single-18')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.title).toBe('Применение')
+    expect(usage?.sourceBlock?.text).toBe(
+      'Рекомендуется принимать по 1 саше (25 мл) один раз в день, утром или вечером.\n\nКурс приёма — 20 дней',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Продукт не рекомендуется младенцам, детям и подросткам, беременным и кормящим женщинам',
+    ])
+    expect(usage).not.toHaveProperty('facts')
+    expect(usage).not.toHaveProperty('items')
+  })
+})

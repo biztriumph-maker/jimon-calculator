@@ -10,6 +10,7 @@ export type Screen =
   | 'product-health-digestion'
   | 'product-health-digestion-birunkan'
   | 'product-health-digestion-xian-yun-you'
+  | 'product-health-digestion-liver-peptide-turmeric'
   | 'product-health-weight'
   | 'product-health-energy'
   | 'product-health-respiratory'
@@ -50,6 +51,7 @@ export const loadAppState = (): StoredAppState => {
       'product-health-digestion',
       'product-health-digestion-birunkan',
       'product-health-digestion-xian-yun-you',
+      'product-health-digestion-liver-peptide-turmeric',
       'product-health-weight',
       'product-health-energy',
       'product-health-respiratory',

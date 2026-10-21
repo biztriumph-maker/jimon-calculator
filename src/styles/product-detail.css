@@ -273,6 +273,7 @@
   text-align-last: left;
   -webkit-hyphens: auto;
   overflow-wrap: break-word;
+  white-space: pre-line;
 }
 
 .product-detail-screen--single-04 .product-detail-source-card__text {

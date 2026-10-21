@@ -258,6 +258,85 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
       },
     ],
   },
+  {
+    productId: 'single-18',
+    screen: 'product-health-digestion-liver-peptide-turmeric',
+    heroImage: {
+      src: '/images/pechen-peptidy-kurkuma-detail.png',
+      alt: 'Упаковка напитка для поддержки печени с пептидами и куркумой',
+      width: 1448,
+      height: 1086,
+    },
+    summary: {
+      intro:
+        'Напиток для поддержки печени с пептидами и куркумой — растительный напиток JIMON, сочетающий пептиды печени, куркуму и комплекс растительных компонентов. Выпускается в удобных порционных саше для ежедневного употребления.',
+      propertiesTitle: PRODUCT_DETAIL_PROPERTIES_TITLE,
+      properties: [
+        { text: 'Поддерживает работу печени.', verificationStatus: 'requires-confirmation' },
+        { text: 'Способствует очищению организма.', verificationStatus: 'requires-confirmation' },
+        {
+          text: 'Обладает противовоспалительными и противоопухолевыми свойствами.',
+          verificationStatus: 'requires-confirmation',
+        },
+        { text: 'Улучшает обмен веществ.', verificationStatus: 'requires-confirmation' },
+        { text: 'Укрепляет иммунитет.', verificationStatus: 'requires-confirmation' },
+        { text: 'Снимает усталость.', verificationStatus: 'requires-confirmation' },
+        {
+          text: 'Помогает восстановлению организма.',
+          verificationStatus: 'requires-confirmation',
+        },
+      ],
+    },
+    sections: [
+      {
+        id: 'characteristics',
+        label: 'О продукте',
+        title: 'О продукте',
+        facts: [
+          { label: 'Название', value: 'Напиток для поддержки печени с пептидами и куркумой' },
+          { label: 'Форма выпуска', value: 'Растительный напиток в порционных саше.' },
+          { label: 'Количество', value: '20 саше.' },
+          { label: 'Объём одного саше', value: '25 мл.' },
+          { label: 'Общий объём', value: '500 мл.' },
+          { label: 'Срок хранения', value: '18 месяцев.' },
+          { label: 'Категория', value: 'Растительный пищевой напиток JIMON.' },
+          { label: 'Хранение', value: 'В сухом, защищённом от прямого света месте.' },
+        ],
+      },
+      {
+        id: 'composition',
+        label: 'Состав',
+        title: 'Состав',
+        items: [
+          'Пептиды белков печени — 0,3 мг на саше.',
+          'Куркума — 375 мг на саше.',
+          'Концентрированный сок розы Роксбурга (колючей груши).',
+          'Порошок сока опунции (кактусовой груши).',
+          'Концентрированный порошок артишока.',
+          'Порошок семян ховении сладкой.',
+          'Порошок травы пентхорума китайского.',
+          'Порошок корня кудзу (пуэрарии).',
+          'Порошок кукурузных рылец.',
+        ],
+      },
+      {
+        id: 'usage',
+        label: 'Применение',
+        title: 'Применение',
+        sourceBlock: {
+          text: 'Рекомендуется принимать по 1 саше (25 мл) один раз в день, утром или вечером.\n\nКурс приёма — 20 дней',
+          editorialSource: {
+            labelTranslation:
+              'Рекомендуется принимать по 1 саше (25 мл) один раз в день, утром или вечером. Курс приёма — 20 дней',
+            verificationStatus: 'requires-confirmation',
+          },
+        },
+        restrictions: [
+          'Продукт не рекомендуется младенцам, детям и подросткам, беременным и кормящим женщинам',
+        ],
+      },
+    ],
+  },
 ]
 
 export const informationProductDetailById = new Map(

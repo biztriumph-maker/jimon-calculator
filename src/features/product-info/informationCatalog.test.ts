@@ -27,4 +27,17 @@ describe('information product catalog', () => {
     expect(getMissingInformationProductIds('digestion')).toEqual([])
     expect(getInformationProducts('digestion').every((product) => product.image)).toBe(true)
   })
+
+  it('uses the canonical single-18 name throughout the information catalog', () => {
+    const catalogProduct = productById.get('single-18')
+    const informationProduct = getInformationProducts('digestion').find(
+      (product) => product.id === 'single-18',
+    )
+
+    expect(catalogProduct?.nameRu).toBe(
+      'Напиток для поддержки печени с пептидами и куркумой',
+    )
+    expect(catalogProduct?.nameZh).toBe('添然萃肝蛋白肽姜黄饮')
+    expect(informationProduct).toBe(catalogProduct)
+  })
 })
