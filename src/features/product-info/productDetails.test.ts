@@ -3,6 +3,8 @@ import { productById } from '../../data/catalog'
 import {
   informationProductDetailById,
   informationProductDetailByScreen,
+  informationProductDetails,
+  PRODUCT_DETAIL_PROPERTIES_TITLE,
 } from './productDetails'
 
 describe('information product details', () => {
@@ -29,7 +31,7 @@ describe('information product details', () => {
     expect(detail?.summary.intro).toBe(
       'Бирункан — растительный пищевой продукт JIMON в форме прессованных жевательных таблеток с листом лотоса, боярышником и другими растительными компонентами.',
     )
-    expect(detail?.summary.propertiesTitle).toBe('Свойства')
+    expect(detail?.summary.propertiesTitle).toBe('По опыту команды')
     expect(detail?.summary.properties.map((property) => property.text)).toEqual([
       'Мягкая детоксикация организма.',
       'Снижение и контроль веса.',
@@ -124,25 +126,14 @@ describe('Xian Yun You product detail', () => {
     expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
   })
 
-  it('publishes only source-supported properties and preserves partner claims separately', () => {
+  it('uses one canonical list for all eight team observations', () => {
     const summary = informationProductDetailById.get('single-04')?.summary
 
     expect(summary?.intro).toBe(
       'Сянь Юнь Ю — фруктово-овощной пищевой продукт JIMON в форме прессованных жевательных таблеток. Формула сочетает порошки ягод, фруктово-овощные компоненты и пищевые волокна.',
     )
-    expect(summary?.propertiesTitle).toBe('Свойства')
+    expect(summary?.propertiesTitle).toBe('По опыту команды')
     expect(summary?.properties.map((property) => property.text)).toEqual([
-      'Содержит фруктово-овощные компоненты.',
-      'Содержит пищевые волокна.',
-      'Подходит для дополнения рациона.',
-      'Позиционируется как пищевой продукт с пониженным содержанием сахара.',
-    ])
-    expect(
-      summary?.properties.every(
-        (property) => property.verificationStatus === 'source-supported',
-      ),
-    ).toBe(true)
-    expect(summary?.sourceProperties?.map((property) => property.text)).toEqual([
       'Снижает усвоение жиров и сахара, помогает выводить жир.',
       'Улучшает работу кишечника, регулирует межклеточную жидкость.',
       'Ускоряет обмен веществ, устраняет запоры, выводит токсины.',
@@ -153,10 +144,34 @@ describe('Xian Yun You product detail', () => {
       'Улучшает упругость и чистоту кожи.',
     ])
     expect(
-      summary?.sourceProperties?.every(
+      summary?.properties.every(
         (property) => property.verificationStatus === 'requires-confirmation',
       ),
     ).toBe(true)
+    expect(summary).not.toHaveProperty('sourceProperties')
+
+    const serialized = JSON.stringify(summary)
+    expect(serialized).not.toContain('Содержит фруктово-овощные компоненты.')
+    expect(serialized).not.toContain('Содержит пищевые волокна.')
+    expect(serialized).not.toContain('Подходит для дополнения рациона.')
+    expect(serialized).not.toContain(
+      'Позиционируется как пищевой продукт с пониженным содержанием сахара.',
+    )
+  })
+
+  it('keeps product observations isolated and applies the shared heading standard', () => {
+    const birunkan = informationProductDetailById.get('single-03')
+    const xianYunYou = informationProductDetailById.get('single-04')
+
+    expect(PRODUCT_DETAIL_PROPERTIES_TITLE).toBe('По опыту команды')
+    expect(
+      informationProductDetails.every(
+        (detail) => detail.summary.propertiesTitle === PRODUCT_DETAIL_PROPERTIES_TITLE,
+      ),
+    ).toBe(true)
+    expect(xianYunYou?.summary.properties).not.toBe(birunkan?.summary.properties)
+    expect(birunkan?.summary.properties).toHaveLength(7)
+    expect(xianYunYou?.summary.properties).toHaveLength(8)
   })
 
   it('provides the approved facts, all 16 ingredients and source metadata', () => {
@@ -164,6 +179,11 @@ describe('Xian Yun You product detail', () => {
     const about = detail?.sections.find((section) => section.id === 'characteristics')
     const composition = detail?.sections.find((section) => section.id === 'composition')
 
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
     expect(about?.facts).toEqual([
       { label: 'Название', value: 'Сянь Юнь Ю (Жиротопка) (纤韵悠)' },
       { label: 'Форма выпуска', value: 'Прессованные жевательные таблетки.' },

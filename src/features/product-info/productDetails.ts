@@ -18,8 +18,9 @@ export interface ProductDetailSummary {
   intro: string
   propertiesTitle: string
   properties: readonly ProductDetailProperty[]
-  sourceProperties?: readonly ProductDetailProperty[]
 }
+
+export const PRODUCT_DETAIL_PROPERTIES_TITLE = 'По опыту команды'
 
 export interface ProductDetailEditorialNote {
   text: string
@@ -74,7 +75,7 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
     summary: {
       intro:
         'Бирункан — растительный пищевой продукт JIMON в форме прессованных жевательных таблеток с листом лотоса, боярышником и другими растительными компонентами.',
-      propertiesTitle: 'Свойства',
+      propertiesTitle: PRODUCT_DETAIL_PROPERTIES_TITLE,
       properties: [
         { text: 'Мягкая детоксикация организма.', verificationStatus: 'requires-confirmation' },
         { text: 'Снижение и контроль веса.', verificationStatus: 'requires-confirmation' },
@@ -159,20 +160,8 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
     summary: {
       intro:
         'Сянь Юнь Ю — фруктово-овощной пищевой продукт JIMON в форме прессованных жевательных таблеток. Формула сочетает порошки ягод, фруктово-овощные компоненты и пищевые волокна.',
-      propertiesTitle: 'Свойства',
+      propertiesTitle: PRODUCT_DETAIL_PROPERTIES_TITLE,
       properties: [
-        {
-          text: 'Содержит фруктово-овощные компоненты.',
-          verificationStatus: 'source-supported',
-        },
-        { text: 'Содержит пищевые волокна.', verificationStatus: 'source-supported' },
-        { text: 'Подходит для дополнения рациона.', verificationStatus: 'source-supported' },
-        {
-          text: 'Позиционируется как пищевой продукт с пониженным содержанием сахара.',
-          verificationStatus: 'source-supported',
-        },
-      ],
-      sourceProperties: [
         {
           text: 'Снижает усвоение жиров и сахара, помогает выводить жир.',
           verificationStatus: 'requires-confirmation',
