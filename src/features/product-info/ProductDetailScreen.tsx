@@ -130,6 +130,17 @@ function ProductDetailModal({ section, returnFocusTo, onClose }: ProductDetailMo
           )}
 
           {section.note && <p className="notice product-detail-modal__note">{section.note}</p>}
+
+          {section.restrictions && (
+            <div className="notice product-detail-modal__restrictions">
+              <strong>Ограничения</strong>
+              <ul>
+                {section.restrictions.map((restriction) => (
+                  <li key={restriction}>{restriction}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
     </div>
@@ -144,7 +155,7 @@ export function ProductDetailScreen({ config, onBack }: ProductDetailScreenProps
 
   if (!product) {
     return (
-      <main className="screen product-detail-screen">
+      <main className={`screen product-detail-screen product-detail-screen--${config.productId}`}>
         <BrandHeader compact approved onBack={onBack} />
         <section className="empty-state">
           <h1>Продукт не найден</h1>
@@ -157,11 +168,15 @@ export function ProductDetailScreen({ config, onBack }: ProductDetailScreenProps
   }
 
   return (
-    <main className="screen product-detail-screen">
+    <main className={`screen product-detail-screen product-detail-screen--${config.productId}`}>
       <BrandHeader compact approved onBack={onBack} />
 
       <article className="product-detail-content">
-        <div className={`product-detail-photo product-detail-photo--${config.productId}`}>
+        <div
+          className={`product-detail-photo product-detail-photo--${config.productId}${
+            config.heroImage ? ' product-detail-photo--hero' : ''
+          }`}
+        >
           {config.heroImage ? (
             <img
               className="product-detail-photo__hero"

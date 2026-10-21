@@ -2,7 +2,7 @@ import type { Product } from '../../domain/types'
 import type { Screen } from '../../storage/appStorage'
 
 export type ProductDetailSectionId = 'characteristics' | 'composition' | 'usage'
-export type ProductDetailVerificationStatus = 'requires-confirmation'
+export type ProductDetailVerificationStatus = 'requires-confirmation' | 'source-supported'
 
 export interface ProductDetailFact {
   label: string
@@ -18,13 +18,19 @@ export interface ProductDetailSummary {
   intro: string
   propertiesTitle: string
   properties: readonly ProductDetailProperty[]
+  sourceProperties?: readonly ProductDetailProperty[]
+}
+
+export interface ProductDetailEditorialNote {
+  text: string
+  verificationStatus: ProductDetailVerificationStatus
 }
 
 export interface ProductDetailSourceBlock {
   text: string
   editorialSource: {
     labelTranslation: string
-    userClarification: string
+    userClarification?: string
     verificationStatus: ProductDetailVerificationStatus
   }
 }
@@ -37,6 +43,8 @@ export interface ProductDetailSection {
   items?: readonly string[]
   sourceBlock?: ProductDetailSourceBlock
   note?: string
+  restrictions?: readonly string[]
+  editorialNotes?: readonly ProductDetailEditorialNote[]
 }
 export interface ProductDetailHeroImage {
   src: string
@@ -136,6 +144,128 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
             verificationStatus: 'requires-confirmation',
           },
         },
+      },
+    ],
+  },
+  {
+    productId: 'single-04',
+    screen: 'product-health-digestion-xian-yun-you',
+    heroImage: {
+      src: '/images/zhirotopka-detail.png',
+      alt: 'Упаковка Сянь Юнь Ю',
+      width: 1402,
+      height: 1122,
+    },
+    summary: {
+      intro:
+        'Сянь Юнь Ю — фруктово-овощной пищевой продукт JIMON в форме прессованных жевательных таблеток. Формула сочетает порошки ягод, фруктово-овощные компоненты и пищевые волокна.',
+      propertiesTitle: 'Свойства',
+      properties: [
+        {
+          text: 'Содержит фруктово-овощные компоненты.',
+          verificationStatus: 'source-supported',
+        },
+        { text: 'Содержит пищевые волокна.', verificationStatus: 'source-supported' },
+        { text: 'Подходит для дополнения рациона.', verificationStatus: 'source-supported' },
+        {
+          text: 'Позиционируется как пищевой продукт с пониженным содержанием сахара.',
+          verificationStatus: 'source-supported',
+        },
+      ],
+      sourceProperties: [
+        {
+          text: 'Снижает усвоение жиров и сахара, помогает выводить жир.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Улучшает работу кишечника, регулирует межклеточную жидкость.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Ускоряет обмен веществ, устраняет запоры, способствует выведению токсинов.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Не приводит к набору веса даже при обильной еде.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Способствует очищению организма.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Предотвращает болезни обмена веществ: ожирение, высокое давление, диабет, подагру и жировую болезнь печени.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Поддерживает баланс кишечной микрофлоры, укрепляет иммунитет и создаёт чувство сытости.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Улучшает упругость и чистоту кожи.',
+          verificationStatus: 'requires-confirmation',
+        },
+      ],
+    },
+    sections: [
+      {
+        id: 'characteristics',
+        label: 'О продукте',
+        title: 'О продукте',
+        facts: [
+          { label: 'Название', value: 'Сянь Юнь Ю (Жиротопка) (纤韵悠)' },
+          { label: 'Форма выпуска', value: 'Прессованные жевательные таблетки.' },
+          { label: 'Количество', value: '30 штук.' },
+          { label: 'Масса одной таблетки', value: '1 г.' },
+          { label: 'Общая масса', value: '30 г.' },
+          { label: 'Категория', value: 'Фруктово-овощной пищевой продукт JIMON.' },
+          { label: 'Хранение', value: 'В прохладном сухом месте.' },
+        ],
+      },
+      {
+        id: 'composition',
+        label: 'Состав',
+        title: 'Состав',
+        items: [
+          'Сорбитол.',
+          'Порошок клубничного сока.',
+          'Порошок черники.',
+          'Порошок белой фасоли.',
+          'Порошок семян кассии.',
+          'Порошок зелёного кофе.',
+          'Порошок гриба эноки.',
+          'Порошок гриба копринус.',
+          'Порошок женьшеня.',
+          'Порошок корня кудзу.',
+          'Инулин.',
+          'Аскорбиновая кислота.',
+          'Овсяный бета-глюкан.',
+          'Фруктоолигосахариды.',
+          'Трегалоза.',
+          'Стеарат магния.',
+        ],
+        editorialNotes: [
+          {
+            text: 'Используется культивированный женьшень возрастом до 5 лет включительно.',
+            verificationStatus: 'source-supported',
+          },
+        ],
+      },
+      {
+        id: 'usage',
+        label: 'Применение',
+        title: 'Применение',
+        sourceBlock: {
+          text: 'Рекомендуется принимать по 1–2 таблетки в день после еды, тщательно разжёвывая.',
+          editorialSource: {
+            labelTranslation:
+              'Рекомендуется принимать по 1–2 таблетки в день после еды, тщательно разжёвывая.',
+            verificationStatus: 'source-supported',
+          },
+        },
+        restrictions: [
+          'Продукт не предназначен для детей младше 14 лет, беременных и кормящих женщин.',
+        ],
       },
     ],
   },

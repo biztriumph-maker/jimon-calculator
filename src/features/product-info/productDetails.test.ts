@@ -105,3 +105,106 @@ describe('information product details', () => {
     expect(serialized).not.toContain('Повседневное использование')
   })
 })
+
+describe('Xian Yun You product detail', () => {
+  it('connects single-04 to the existing catalog product and dedicated hero', () => {
+    const detail = informationProductDetailById.get('single-04')
+    const product = productById.get('single-04')
+
+    expect(detail?.screen).toBe('product-health-digestion-xian-yun-you')
+    expect(product?.nameRu).toBe('Сянь Юнь Ю (Жиротопка)')
+    expect(product?.nameZh).toBe('纤韵悠')
+    expect(product?.image).toContain('T04_syan_yun_yu_zhirotopka')
+    expect(detail?.heroImage).toEqual({
+      src: '/images/zhirotopka-detail.png',
+      alt: 'Упаковка Сянь Юнь Ю',
+      width: 1402,
+      height: 1122,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('publishes only source-supported properties and preserves partner claims separately', () => {
+    const summary = informationProductDetailById.get('single-04')?.summary
+
+    expect(summary?.intro).toBe(
+      'Сянь Юнь Ю — фруктово-овощной пищевой продукт JIMON в форме прессованных жевательных таблеток. Формула сочетает порошки ягод, фруктово-овощные компоненты и пищевые волокна.',
+    )
+    expect(summary?.propertiesTitle).toBe('Свойства')
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Содержит фруктово-овощные компоненты.',
+      'Содержит пищевые волокна.',
+      'Подходит для дополнения рациона.',
+      'Позиционируется как пищевой продукт с пониженным содержанием сахара.',
+    ])
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'source-supported',
+      ),
+    ).toBe(true)
+    expect(summary?.sourceProperties).toHaveLength(8)
+    expect(
+      summary?.sourceProperties?.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the approved facts, all 16 ingredients and source metadata', () => {
+    const detail = informationProductDetailById.get('single-04')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(about?.facts).toEqual([
+      { label: 'Название', value: 'Сянь Юнь Ю (Жиротопка) (纤韵悠)' },
+      { label: 'Форма выпуска', value: 'Прессованные жевательные таблетки.' },
+      { label: 'Количество', value: '30 штук.' },
+      { label: 'Масса одной таблетки', value: '1 г.' },
+      { label: 'Общая масса', value: '30 г.' },
+      { label: 'Категория', value: 'Фруктово-овощной пищевой продукт JIMON.' },
+      { label: 'Хранение', value: 'В прохладном сухом месте.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Сорбитол.',
+      'Порошок клубничного сока.',
+      'Порошок черники.',
+      'Порошок белой фасоли.',
+      'Порошок семян кассии.',
+      'Порошок зелёного кофе.',
+      'Порошок гриба эноки.',
+      'Порошок гриба копринус.',
+      'Порошок женьшеня.',
+      'Порошок корня кудзу.',
+      'Инулин.',
+      'Аскорбиновая кислота.',
+      'Овсяный бета-глюкан.',
+      'Фруктоолигосахариды.',
+      'Трегалоза.',
+      'Стеарат магния.',
+    ])
+    expect(composition?.editorialNotes).toEqual([
+      {
+        text: 'Используется культивированный женьшень возрастом до 5 лет включительно.',
+        verificationStatus: 'source-supported',
+      },
+    ])
+  })
+
+  it('keeps the exact usage phrase and makes the restriction available', () => {
+    const usage = informationProductDetailById
+      .get('single-04')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.sourceBlock?.text).toBe(
+      'Рекомендуется принимать по 1–2 таблетки в день после еды, тщательно разжёвывая.',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Продукт не предназначен для детей младше 14 лет, беременных и кормящих женщин.',
+    ])
+
+    const serialized = JSON.stringify(usage)
+    expect(serialized).not.toContain('после обеда')
+    expect(serialized).not.toContain('после ужина')
+    expect(serialized).not.toContain('курс')
+  })
+})
