@@ -142,7 +142,16 @@ describe('Xian Yun You product detail', () => {
         (property) => property.verificationStatus === 'source-supported',
       ),
     ).toBe(true)
-    expect(summary?.sourceProperties).toHaveLength(8)
+    expect(summary?.sourceProperties?.map((property) => property.text)).toEqual([
+      'Снижает усвоение жиров и сахара, помогает выводить жир.',
+      'Улучшает работу кишечника, регулирует межклеточную жидкость.',
+      'Ускоряет обмен веществ, устраняет запоры, выводит токсины.',
+      'Не приводит к набору веса даже при обильной еде.',
+      'Способствует очищению организма.',
+      'Предотвращает болезни обмена веществ: ожирение, высокое давление, диабет, подагру, жировую печень.',
+      'Поддерживает баланс кишечной микрофлоры, укрепляет иммунитет и создаёт чувство сытости.',
+      'Улучшает упругость и чистоту кожи.',
+    ])
     expect(
       summary?.sourceProperties?.every(
         (property) => property.verificationStatus === 'requires-confirmation',

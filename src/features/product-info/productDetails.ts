@@ -182,7 +182,7 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
           verificationStatus: 'requires-confirmation',
         },
         {
-          text: 'Ускоряет обмен веществ, устраняет запоры, способствует выведению токсинов.',
+          text: 'Ускоряет обмен веществ, устраняет запоры, выводит токсины.',
           verificationStatus: 'requires-confirmation',
         },
         {
@@ -194,7 +194,7 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
           verificationStatus: 'requires-confirmation',
         },
         {
-          text: 'Предотвращает болезни обмена веществ: ожирение, высокое давление, диабет, подагру и жировую болезнь печени.',
+          text: 'Предотвращает болезни обмена веществ: ожирение, высокое давление, диабет, подагру, жировую печень.',
           verificationStatus: 'requires-confirmation',
         },
         {
