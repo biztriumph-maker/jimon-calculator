@@ -1,7 +1,7 @@
 import { productById } from '../../data/catalog'
 import type { Product } from '../../domain/types'
 
-export type InformationDirectionId = 'digestion'
+export type InformationDirectionId = 'digestion' | 'vision'
 
 export const informationProductIdsByDirection: Readonly<
   Record<InformationDirectionId, readonly Product['id'][]>
@@ -16,6 +16,21 @@ export const informationProductIdsByDirection: Readonly<
     'single-36',
     'single-22',
   ],
+  vision: ['single-09'],
+}
+
+export function isInformationDirectionId(
+  directionId: string,
+): directionId is InformationDirectionId {
+  return directionId in informationProductIdsByDirection
+}
+
+export function getInformationDirectionId(
+  productId: Product['id'],
+): InformationDirectionId | undefined {
+  return (Object.keys(informationProductIdsByDirection) as InformationDirectionId[]).find(
+    (directionId) => informationProductIdsByDirection[directionId].includes(productId),
+  )
 }
 
 export function getInformationProducts(directionId: InformationDirectionId): Product[] {

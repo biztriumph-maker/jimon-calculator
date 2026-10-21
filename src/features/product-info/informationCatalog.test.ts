@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { productById } from '../../data/catalog'
 import {
+  getInformationDirectionId,
   getInformationProducts,
   getMissingInformationProductIds,
   informationProductIdsByDirection,
@@ -39,5 +40,23 @@ describe('information product catalog', () => {
     )
     expect(catalogProduct?.nameZh).toBe('添然萃肝蛋白肽姜黄饮')
     expect(informationProduct).toBe(catalogProduct)
+  })
+
+  it('connects the canonical single-09 product to the vision direction', () => {
+    const catalogProduct = productById.get('single-09')
+    const informationProduct = getInformationProducts('vision')[0]
+
+    expect(informationProductIdsByDirection.vision).toEqual(['single-09'])
+    expect(getMissingInformationProductIds('vision')).toEqual([])
+    expect(getInformationDirectionId('single-09')).toBe('vision')
+    expect(catalogProduct?.nameRu).toBe('Карандаш Сафора')
+    expect(catalogProduct?.nameZh).toBe('媛韵牌苦参抑菌液')
+    expect(informationProduct).toBe(catalogProduct)
+  })
+
+  it('does not duplicate products across information directions', () => {
+    const configuredProductIds = Object.values(informationProductIdsByDirection).flat()
+
+    expect(new Set(configuredProductIds).size).toBe(configuredProductIds.length)
   })
 })

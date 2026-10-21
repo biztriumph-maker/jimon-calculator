@@ -342,3 +342,118 @@ describe('Liver peptide turmeric product detail', () => {
     expect(usage).not.toHaveProperty('items')
   })
 })
+
+describe('Safora applicator product detail', () => {
+  it('connects single-09 to its canonical catalog product and dedicated hero', () => {
+    const detail = informationProductDetailById.get('single-09')
+    const product = productById.get('single-09')
+
+    expect(detail?.screen).toBe('product-health-vision-safora')
+    expect(product?.nameRu).toBe('Карандаш Сафора')
+    expect(product?.nameZh).toBe('媛韵牌苦参抑菌液')
+    expect(product?.image).toContain('T09_chudo_karandash_bakteriostaticheskaya_zhidkost')
+    expect(product?.prices).toEqual({
+      0: 319,
+      10: 279,
+      20: 252,
+      30: 225,
+      40: 198,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/karandash-safora-detail.png',
+      alt: 'Упаковка карандаша Сафора',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the approved introduction and six team observations in order', () => {
+    const summary = informationProductDetailById.get('single-09')?.summary
+
+    expect(summary?.intro).toBe(
+      'Карандаш Сафора — растительное наружное средство JIMON в формате удобного карандаша-аппликатора. Бактериостатический раствор с натуральными растительными компонентами для наружного применения.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Улучшает микроциркуляцию крови в сосудах глаз.',
+      'Подходит при сухости и переутомлении глаз, вызванных длительной работой перед экраном.',
+      'Облегчает усталость глаз.',
+      'Способствует восстановлению и улучшению остроты зрения.',
+      'Подходит для профилактики различных глазных заболеваний.',
+      'При воспалительных состояниях ЛОР-органов помогает уменьшить симптомы воспаления, облегчить дыхание и снизить болевые ощущения.',
+    ])
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the approved product facts and five main plant components', () => {
+    const detail = informationProductDetailById.get('single-09')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      { label: 'Название', value: 'Карандаш Сафора' },
+      {
+        label: 'Форма выпуска',
+        value: 'Жидкость для наружного применения в карандаше-аппликаторе.',
+      },
+      { label: 'Объём', value: '10 мл.' },
+      { label: 'Количество', value: '1 флакон.' },
+      {
+        label: 'Категория',
+        value: 'Бактериостатический раствор для наружного применения.',
+      },
+      { label: 'Срок хранения', value: '2 года.' },
+      { label: 'Хранение', value: 'В сухом, прохладном месте, защищённом от света.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Шафран.',
+      'Софора.',
+      'Цянь-ли-гуан.',
+      'Семена кассии.',
+      'Хризантема.',
+    ])
+  })
+
+  it('uses the shared external-application and restrictions structure', () => {
+    const usage = informationProductDetailById
+      .get('single-09')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.title).toBe('Применение')
+    expect(usage?.sourceBlock?.text).toBe(
+      'Нанести средство непосредственно на нужный участок кожи и дать высохнуть естественным образом.\n\nВремя бактериостатического действия — 2 минуты',
+    )
+    expect(usage?.sourceBlock?.editorialSource.verificationStatus).toBe('source-supported')
+    expect(usage?.restrictions).toEqual([
+      'Не принимать внутрь и не допускать случайного проглатывания.',
+      'Хранить в недоступном для детей месте.',
+      'Не наносить на повреждённую кожу.',
+      'При повышенной чувствительности использовать с осторожностью; при появлении дискомфорта прекратить применение.',
+      'Не использовать совместно с препаратами, подавляющими бактериальную активность, без консультации специалиста.',
+    ])
+    expect(JSON.stringify(usage)).not.toContain('глазные капли')
+    expect(JSON.stringify(usage)).not.toContain('слизистые оболочки')
+  })
+
+  it('keeps the previous product details unchanged and product ids unique', () => {
+    expect(informationProductDetailById.get('single-03')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-04')?.summary.properties).toHaveLength(8)
+    expect(informationProductDetailById.get('single-18')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-09')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})

@@ -19,6 +19,10 @@ import { PartnerModal } from '../features/partner/PartnerModal'
 import { PlanScreen } from '../features/purchase-plan/PlanScreen'
 import { ProductDirectionProductsScreen } from '../features/product-info/ProductDirectionProductsScreen'
 import { ProductDetailScreen } from '../features/product-info/ProductDetailScreen'
+import {
+  getInformationDirectionId,
+  isInformationDirectionId,
+} from '../features/product-info/informationCatalog'
 import { informationProductDetailById, informationProductDetailByScreen } from '../features/product-info/productDetails'
 import { loadAppState, saveAppState, type Screen } from '../storage/appStorage'
 
@@ -94,9 +98,9 @@ export default function App() {
           }}
         />
       )}
-      {healthDirection?.id === 'digestion' && (
+      {healthDirection && isInformationDirectionId(healthDirection.id) && (
         <ProductDirectionProductsScreen
-          directionId="digestion"
+          directionId={healthDirection.id}
           title={healthDirection.title}
           onBack={() => setScreen('product-health')}
           onOpenProduct={(product) => {
@@ -110,10 +114,14 @@ export default function App() {
       {informationProductDetail && (
         <ProductDetailScreen
           config={informationProductDetail}
-          onBack={() => setScreen('product-health-digestion')}
+          onBack={() => {
+            const directionId = getInformationDirectionId(informationProductDetail.productId)
+            const direction = directionId ? healthDirectionById.get(directionId) : undefined
+            setScreen(direction?.screen ?? 'product-health')
+          }}
         />
       )}
-      {healthDirection && healthDirection.id !== 'digestion' && (
+      {healthDirection && !isInformationDirectionId(healthDirection.id) && (
         <ProductDirectionScreen
           title={healthDirection.title}
           onBack={() => setScreen('product-health')}
