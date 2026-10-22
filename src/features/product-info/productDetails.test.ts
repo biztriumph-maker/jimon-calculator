@@ -343,6 +343,68 @@ describe('Liver peptide turmeric product detail', () => {
   })
 })
 
+describe('flax collagen porridge product detail', () => {
+  it('connects single-06 to the digestion detail and dedicated hero', () => {
+    const detail = informationProductDetailById.get('single-06')
+    const product = productById.get('single-06')
+
+    expect(detail?.screen).toBe('product-health-digestion-flax-collagen')
+    expect(product?.nameRu).toBe('Пептидная льняная каша с коллагеном')
+    expect(product?.nameZh).toBe('添然萃亚麻籽胶原蛋白肽粉固体饮料')
+    expect(detail?.heroImage).toEqual({
+      src: '/images/peptidnaya-lnyanaya-kasha-s-kollagenom-hero.png',
+      alt: 'Упаковка пептидной льняной каши с коллагеном',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('provides all three modal sections in the shared order', () => {
+    const detail = informationProductDetailById.get('single-06')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(detail?.sections.map((section) => section.label)).toEqual([
+      'О продукте',
+      'Состав',
+      'Применение',
+    ])
+    expect(detail?.sections.find((section) => section.id === 'characteristics')?.facts).toHaveLength(8)
+    expect(detail?.sections.find((section) => section.id === 'composition')?.items).toHaveLength(15)
+    expect(detail?.sections.find((section) => section.id === 'usage')?.sourceBlock?.text).toContain('250 мл')
+  })
+
+  it('keeps the exact ten team experience statements in order', () => {
+    const properties = informationProductDetailById
+      .get('single-06')
+      ?.summary.properties.map((property) => property.text)
+
+    expect(properties).toEqual([
+      'Способствует длительному ощущению сытости.',
+      'Помогает контролировать массу тела.',
+      'Поддерживает здоровую работу кишечника.',
+      'Помогает снижать калорийность ежедневного рациона при замене более калорийных продуктов.',
+      'Способствует улучшению пищеварения.',
+      'Поддерживает естественное очищение кишечника.',
+      'Способствует нормальному обмену веществ.',
+      'Подходит для программ контроля веса.',
+      'Помогает поддерживать нормальную микрофлору кишечника.',
+      'Содержит коллагеновые пептиды и растительные питательные компоненты.',
+    ])
+  })
+
+  it('keeps the detail id unique', () => {
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-06')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})
+
 describe('Safora applicator product detail', () => {
   it('connects single-09 to its canonical catalog product and dedicated hero', () => {
     const detail = informationProductDetailById.get('single-09')

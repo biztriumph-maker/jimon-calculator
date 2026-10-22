@@ -59,4 +59,13 @@ describe('information product catalog', () => {
 
     expect(new Set(configuredProductIds).size).toBe(configuredProductIds.length)
   })
+
+  it('places the flax collagen product only in digestion', () => {
+    const configuredDirections = Object.entries(informationProductIdsByDirection)
+      .filter(([, productIds]) => productIds.includes('single-06'))
+      .map(([directionId]) => directionId)
+
+    expect(configuredDirections).toEqual(['digestion'])
+    expect(getInformationDirectionId('single-06')).toBe('digestion')
+  })
 })

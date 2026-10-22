@@ -338,6 +338,122 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
     ],
   },
   {
+    productId: 'single-06',
+    screen: 'product-health-digestion-flax-collagen',
+    heroImage: {
+      src: '/images/peptidnaya-lnyanaya-kasha-s-kollagenom-hero.png',
+      alt: 'Упаковка пептидной льняной каши с коллагеном',
+      width: 1448,
+      height: 1086,
+    },
+    summary: {
+      intro:
+        'Пептидная льняная каша с коллагеном — сухой растворимый пищевой продукт JIMON на основе семян льна, пептидов костного коллагена, злаков и растительных компонентов. Выпускается в порционных саше для быстрого приготовления напитка.',
+      propertiesTitle: PRODUCT_DETAIL_PROPERTIES_TITLE,
+      properties: [
+        {
+          text: 'Способствует длительному ощущению сытости.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Помогает контролировать массу тела.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Поддерживает здоровую работу кишечника.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Помогает снижать калорийность ежедневного рациона при замене более калорийных продуктов.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Способствует улучшению пищеварения.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Поддерживает естественное очищение кишечника.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Способствует нормальному обмену веществ.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Подходит для программ контроля веса.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Помогает поддерживать нормальную микрофлору кишечника.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Содержит коллагеновые пептиды и растительные питательные компоненты.',
+          verificationStatus: 'requires-confirmation',
+        },
+      ],
+    },
+    sections: [
+      {
+        id: 'characteristics',
+        label: 'О продукте',
+        title: 'О продукте',
+        facts: [
+          { label: 'Название', value: 'Пептидная льняная каша с коллагеном' },
+          {
+            label: 'Форма выпуска',
+            value: 'Порошкообразный растворимый пищевой продукт в порционных саше.',
+          },
+          { label: 'Количество', value: '10 саше.' },
+          { label: 'Масса одного саше', value: '30 г.' },
+          { label: 'Масса нетто', value: '300 г.' },
+          { label: 'Категория', value: 'Сухая смесь для приготовления напитка.' },
+          { label: 'Срок хранения', value: '18 месяцев.' },
+          { label: 'Хранение', value: 'В прохладном сухом месте.' },
+        ],
+      },
+      {
+        id: 'composition',
+        label: 'Состав',
+        title: 'Состав',
+        items: [
+          'Порошок из термообработанных семян льна.',
+          'Порошок пептидов костного коллагена.',
+          'Эритрит.',
+          'Овсяная мука.',
+          'Кристаллическая фруктоза.',
+          'Порошок татарской гречихи.',
+          'Порошок корня пуэрарии.',
+          'Трегалоза.',
+          'Ксантановая камедь.',
+          'Мука из киноа.',
+          'Порошок пории кокосовидной.',
+          'Порошок белой фасоли.',
+          'L-арабиноза.',
+          'Дрожжевой экстракт.',
+          'Витамин E.',
+        ],
+      },
+      {
+        id: 'usage',
+        label: 'Применение',
+        title: 'Применение',
+        sourceBlock: {
+          text: 'Содержимое 1 саше постепенно добавить примерно в 250 мл холодной или тёплой воды и тщательно размешать до однородности.',
+          editorialSource: {
+            labelTranslation:
+              'Содержимое 1 саше добавить примерно в 250 мл холодной или тёплой воды, перемешивая до однородности.',
+            verificationStatus: 'source-supported',
+          },
+        },
+        restrictions: [
+          'Продукт содержит пищевые волокна; после употребления рекомендуется пить достаточно воды.',
+          'Содержит орехи или продукты их переработки, а также злаки, содержащие глютен. При аллергии употреблять с осторожностью.',
+        ],
+      },
+    ],
+  },
+  {
     productId: 'single-09',
     screen: 'product-health-vision-safora',
     heroImage: {
