@@ -755,6 +755,98 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
       },
     ],
   },
+  {
+    productId: 'single-19',
+    screen: 'product-health-digestion-luohan-guo',
+    heroImage: {
+      src: '/images/luohan-guo-napitok-hero.png',
+      alt: 'Бело-фиолетовая упаковка напитка Луо Хань Го',
+      width: 1448,
+      height: 1086,
+    },
+    summary: {
+      intro:
+        'Луо Хань Го JIMON — растительный напиток на основе воды, плодов луо хань го и комплекса растительных компонентов. Формула сочетает луо хань го, юйчжу, жимолость, женьшень и периллу. Продукт ориентирован на поддержку комфорта пищеварения и баланса желудочно-кишечного тракта.',
+      propertiesTitle: PRODUCT_DETAIL_PROPERTIES_TITLE,
+      properties: [
+        {
+          text: 'Поддерживает комфорт желудка и кишечника.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Способствует балансу микрофлоры.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Поддерживает полезные бактерии кишечника.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Помогает сохранять комфорт после приёма пищи.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Способствует уменьшению воспалительных процессов в желудочно-кишечном тракте и быстрому восстановлению слизистых оболочек.',
+          verificationStatus: 'requires-confirmation',
+        },
+      ],
+    },
+    sections: [
+      {
+        id: 'characteristics',
+        label: 'О продукте',
+        title: 'О продукте',
+        facts: [
+          {
+            label: 'Название',
+            value:
+              'Луо Хань Го — напиток для поддержки желудка и пищеварительной системы (罗汉果植物饮料).',
+          },
+          { label: 'Форма выпуска', value: 'Растительный напиток.' },
+          { label: 'Количество', value: '2 флакона.' },
+          { label: 'Объём одного флакона', value: '50 мл.' },
+          { label: 'Общий объём', value: '100 мл.' },
+          { label: 'Категория', value: 'Растительный напиток JIMON.' },
+          {
+            label: 'Хранение',
+            value:
+              'Хранить плотно закрытым в прохладном, сухом и хорошо проветриваемом месте.',
+          },
+          { label: 'Срок годности', value: '18 месяцев.' },
+        ],
+      },
+      {
+        id: 'composition',
+        label: 'Состав',
+        title: 'Состав',
+        items: [
+          'Вода.',
+          'Луо Хань Го.',
+          'Юйчжу (玉竹).',
+          'Жимолость (金银花).',
+          'Женьшень (искусственно культивированный).',
+          'Перилла (紫苏).',
+        ],
+      },
+      {
+        id: 'usage',
+        label: 'Применение',
+        title: 'Применение',
+        sourceBlock: {
+          text: '1. Продукт выпускается в формате готового растительного напитка.\n2. Один флакон содержит 50 мл.\n3. Употреблять как порционный напиток в рамках ежедневного рациона.',
+          editorialSource: {
+            labelTranslation:
+              'Продукт выпускается в формате готового растительного напитка. Один флакон содержит 50 мл. Употреблять как порционный напиток в рамках ежедневного рациона.',
+            verificationStatus: 'source-supported',
+          },
+        },
+        restrictions: [
+          'Не употреблять при индивидуальной непереносимости компонентов.',
+          'Не употреблять при повреждении упаковки.',
+        ],
+      },
+    ],
+  },
 ]
 
 export const informationProductDetailById = new Map(

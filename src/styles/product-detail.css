@@ -82,6 +82,7 @@
   font-size: clamp(1.85rem, 8vw, 2.2rem);
   line-height: 1;
   letter-spacing: -.045em;
+  overflow-wrap: anywhere;
 }
 
 .product-detail-heading p {

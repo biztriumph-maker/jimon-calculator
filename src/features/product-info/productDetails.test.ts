@@ -755,3 +755,118 @@ describe('bone collagen product detail', () => {
     )
   })
 })
+
+describe('Luo Han Guo drink product detail', () => {
+  it('connects the existing single-19 product and preserves commercial data', () => {
+    const detail = informationProductDetailById.get('single-19')
+    const product = productById.get('single-19')
+
+    expect(detail?.screen).toBe('product-health-digestion-luohan-guo')
+    expect(product?.nameRu).toBe(
+      'Луо Хань Го — напиток для поддержки желудка и пищеварительной системы',
+    )
+    expect(product?.nameZh).toBe('罗汉果植物饮料')
+    expect(product?.prices).toEqual({
+      0: 599,
+      10: 599,
+      20: 549,
+      30: 499,
+      40: 449,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/luohan-guo-napitok-hero.png',
+      alt: 'Бело-фиолетовая упаковка напитка Луо Хань Го',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the approved introduction and five team observations verbatim', () => {
+    const summary = informationProductDetailById.get('single-19')?.summary
+
+    expect(summary?.intro).toBe(
+      'Луо Хань Го JIMON — растительный напиток на основе воды, плодов луо хань го и комплекса растительных компонентов. Формула сочетает луо хань го, юйчжу, жимолость, женьшень и периллу. Продукт ориентирован на поддержку комфорта пищеварения и баланса желудочно-кишечного тракта.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Поддерживает комфорт желудка и кишечника.',
+      'Способствует балансу микрофлоры.',
+      'Поддерживает полезные бактерии кишечника.',
+      'Помогает сохранять комфорт после приёма пищи.',
+      'Способствует уменьшению воспалительных процессов в желудочно-кишечном тракте и быстрому восстановлению слизистых оболочек.',
+    ])
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the exact facts and six composition items in order', () => {
+    const detail = informationProductDetailById.get('single-19')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      {
+        label: 'Название',
+        value:
+          'Луо Хань Го — напиток для поддержки желудка и пищеварительной системы (罗汉果植物饮料).',
+      },
+      { label: 'Форма выпуска', value: 'Растительный напиток.' },
+      { label: 'Количество', value: '2 флакона.' },
+      { label: 'Объём одного флакона', value: '50 мл.' },
+      { label: 'Общий объём', value: '100 мл.' },
+      { label: 'Категория', value: 'Растительный напиток JIMON.' },
+      {
+        label: 'Хранение',
+        value: 'Хранить плотно закрытым в прохладном, сухом и хорошо проветриваемом месте.',
+      },
+      { label: 'Срок годности', value: '18 месяцев.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Вода.',
+      'Луо Хань Го.',
+      'Юйчжу (玉竹).',
+      'Жимолость (金银花).',
+      'Женьшень (искусственно культивированный).',
+      'Перилла (紫苏).',
+    ])
+    expect(composition?.items).toHaveLength(6)
+  })
+
+  it('uses only the approved usage text and restrictions', () => {
+    const usage = informationProductDetailById
+      .get('single-19')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.sourceBlock?.text).toBe(
+      '1. Продукт выпускается в формате готового растительного напитка.\n2. Один флакон содержит 50 мл.\n3. Употреблять как порционный напиток в рамках ежедневного рациона.',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Не употреблять при индивидуальной непереносимости компонентов.',
+      'Не употреблять при повреждении упаковки.',
+    ])
+  })
+
+  it('keeps every product detail id unique and previous cards unchanged', () => {
+    expect(informationProductDetailById.get('single-03')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-04')?.summary.properties).toHaveLength(8)
+    expect(informationProductDetailById.get('single-18')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-06')?.summary.properties).toHaveLength(10)
+    expect(informationProductDetailById.get('single-07')?.summary.properties).toHaveLength(9)
+    expect(informationProductDetailById.get('single-09')?.summary.properties).toHaveLength(6)
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-19')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})

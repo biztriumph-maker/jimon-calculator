@@ -42,6 +42,20 @@ describe('information product catalog', () => {
     expect(informationProduct).toBe(catalogProduct)
   })
 
+  it('uses the canonical single-19 name in the existing digestion direction', () => {
+    const catalogProduct = productById.get('single-19')
+    const informationProduct = getInformationProducts('digestion').find(
+      (product) => product.id === 'single-19',
+    )
+
+    expect(catalogProduct?.nameRu).toBe(
+      'Луо Хань Го — напиток для поддержки желудка и пищеварительной системы',
+    )
+    expect(catalogProduct?.nameZh).toBe('罗汉果植物饮料')
+    expect(getInformationDirectionId('single-19')).toBe('digestion')
+    expect(informationProduct).toBe(catalogProduct)
+  })
+
   it('connects the canonical single-09 product to the vision direction', () => {
     const catalogProduct = productById.get('single-09')
     const informationProduct = getInformationProducts('vision')[0]
