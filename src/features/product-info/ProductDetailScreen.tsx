@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import { scrollViewportToTop, useManualScrollRestoration } from '../../app/scrollNavigation'
 import { productById } from '../../data/catalog'
 import { BrandHeader, ProductImage } from '../../components/Common'
 import type { ProductDetailConfig, ProductDetailSection } from './productDetails'
@@ -152,6 +153,13 @@ export function ProductDetailScreen({ config, onBack }: ProductDetailScreenProps
   const activeTriggerRef = useRef<HTMLButtonElement | null>(null)
   const closeModal = useCallback(() => setActiveSection(null), [])
   const product = productById.get(config.productId)
+
+  useLayoutEffect(() => {
+    const restoreScrollRestoration = useManualScrollRestoration(window.history)
+    scrollViewportToTop(window)
+
+    return restoreScrollRestoration
+  }, [config.productId])
 
   if (!product) {
     return (

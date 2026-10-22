@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createOrderId } from './utils'
+import { rememberScrollPosition, restoreScrollPosition } from './scrollNavigation'
 import { products } from '../data/catalog'
 import { moveOrder } from '../domain/calculator'
 import type { CalculationStart, PlanOrder, Product } from '../domain/types'
@@ -33,11 +34,20 @@ export default function App() {
   const [orders, setOrders] = useState<PlanOrder[]>(initial.orders)
   const [partnerModalOpen, setPartnerModalOpen] = useState(false)
   const [editor, setEditor] = useState<{ product: Product; order: PlanOrder | null } | null>(null)
+  const productCatalogScrollPositionsRef = useRef(new Map<Screen, number>())
+  const pendingScrollRestoreRef = useRef<Screen | null>(null)
   const healthDirection = healthDirectionByScreen.get(screen)
   const beautyDirection = beautyDirectionByScreen.get(screen)
   const informationProductDetail = informationProductDetailByScreen.get(screen)
 
   useEffect(() => saveAppState({ screen, start, orders }), [screen, start, orders])
+
+  useLayoutEffect(() => {
+    if (pendingScrollRestoreRef.current !== screen) return
+
+    restoreScrollPosition(productCatalogScrollPositionsRef.current, screen, window)
+    pendingScrollRestoreRef.current = null
+  }, [screen])
 
   const goHome = () => {
     setScreen('home')
@@ -106,6 +116,7 @@ export default function App() {
           onOpenProduct={(product) => {
             const detail = informationProductDetailById.get(product.id)
             if (!detail) return false
+            rememberScrollPosition(productCatalogScrollPositionsRef.current, screen, window)
             setScreen(detail.screen)
             return true
           }}
@@ -117,7 +128,9 @@ export default function App() {
           onBack={() => {
             const directionId = getInformationDirectionId(informationProductDetail.productId)
             const direction = directionId ? healthDirectionById.get(directionId) : undefined
-            setScreen(direction?.screen ?? 'product-health')
+            const targetScreen = direction?.screen ?? 'product-health'
+            pendingScrollRestoreRef.current = targetScreen
+            setScreen(targetScreen)
           }}
         />
       )}
