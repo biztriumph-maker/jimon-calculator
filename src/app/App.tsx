@@ -36,6 +36,7 @@ export default function App() {
   const [editor, setEditor] = useState<{ product: Product; order: PlanOrder | null } | null>(null)
   const productCatalogScrollPositionsRef = useRef(new Map<Screen, number>())
   const pendingScrollRestoreRef = useRef<Screen | null>(null)
+  const productDetailReturnScreenRef = useRef<Screen | null>(null)
   const healthDirection = healthDirectionByScreen.get(screen)
   const beautyDirection = beautyDirectionByScreen.get(screen)
   const informationProductDetail = informationProductDetailByScreen.get(screen)
@@ -117,6 +118,7 @@ export default function App() {
             const detail = informationProductDetailById.get(product.id)
             if (!detail) return false
             rememberScrollPosition(productCatalogScrollPositionsRef.current, screen, window)
+            productDetailReturnScreenRef.current = screen
             setScreen(detail.screen)
             return true
           }}
@@ -128,7 +130,8 @@ export default function App() {
           onBack={() => {
             const directionId = getInformationDirectionId(informationProductDetail.productId)
             const direction = directionId ? healthDirectionById.get(directionId) : undefined
-            const targetScreen = direction?.screen ?? 'product-health'
+            const targetScreen = productDetailReturnScreenRef.current ?? direction?.screen ?? 'product-health'
+            productDetailReturnScreenRef.current = null
             pendingScrollRestoreRef.current = targetScreen
             setScreen(targetScreen)
           }}

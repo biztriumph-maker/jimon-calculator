@@ -1,7 +1,7 @@
 import { productById } from '../../data/catalog'
 import type { Product } from '../../domain/types'
 
-export type InformationDirectionId = 'digestion' | 'heart' | 'joints' | 'vision'
+export type InformationDirectionId = 'digestion' | 'heart' | 'joints' | 'vision' | 'energy'
 
 export const informationProductIdsByDirection: Readonly<
   Record<InformationDirectionId, readonly Product['id'][]>
@@ -18,7 +18,8 @@ export const informationProductIdsByDirection: Readonly<
     'single-36',
     'single-22',
   ],
-  vision: ['single-09'],
+  vision: ['single-09', 'single-16'],
+  energy: ['single-16'],
 }
 
 export function isInformationDirectionId(
@@ -30,7 +31,13 @@ export function isInformationDirectionId(
 export function getInformationDirectionId(
   productId: Product['id'],
 ): InformationDirectionId | undefined {
-  return (Object.keys(informationProductIdsByDirection) as InformationDirectionId[]).find(
+  return getInformationDirectionIds(productId)[0]
+}
+
+export function getInformationDirectionIds(
+  productId: Product['id'],
+): InformationDirectionId[] {
+  return (Object.keys(informationProductIdsByDirection) as InformationDirectionId[]).filter(
     (directionId) => informationProductIdsByDirection[directionId].includes(productId),
   )
 }

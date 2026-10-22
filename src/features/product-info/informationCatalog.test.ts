@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { productById } from '../../data/catalog'
 import {
   getInformationDirectionId,
+  getInformationDirectionIds,
   getInformationProducts,
   getMissingInformationProductIds,
   informationProductIdsByDirection,
@@ -76,12 +77,34 @@ describe('information product catalog', () => {
     const catalogProduct = productById.get('single-09')
     const informationProduct = getInformationProducts('vision')[0]
 
-    expect(informationProductIdsByDirection.vision).toEqual(['single-09'])
+    expect(informationProductIdsByDirection.vision).toEqual(['single-09', 'single-16'])
     expect(getMissingInformationProductIds('vision')).toEqual([])
     expect(getInformationDirectionId('single-09')).toBe('vision')
     expect(catalogProduct?.nameRu).toBe('Карандаш Сафора')
     expect(catalogProduct?.nameZh).toBe('媛韵牌苦参抑菌液')
     expect(informationProduct).toBe(catalogProduct)
+  })
+
+  it('places the canonical single-16 product in vision and energy without duplicating its SKU', () => {
+    const catalogProduct = productById.get('single-16')
+    const visionProduct = getInformationProducts('vision').find(
+      (product) => product.id === 'single-16',
+    )
+    const energyProduct = getInformationProducts('energy').find(
+      (product) => product.id === 'single-16',
+    )
+
+    expect(catalogProduct?.nameRu).toBe(
+      'Баоцин — прессованные таблетки с пептидами костного мозга КРС',
+    )
+    expect(catalogProduct?.nameZh).toBe('葆青 · 牛骨髓肽压片糖果')
+    expect(informationProductIdsByDirection.energy).toEqual(['single-16'])
+    expect(getMissingInformationProductIds('vision')).toEqual([])
+    expect(getMissingInformationProductIds('energy')).toEqual([])
+    expect(getInformationDirectionIds('single-16')).toEqual(['vision', 'energy'])
+    expect(getInformationDirectionId('single-16')).toBe('vision')
+    expect(visionProduct).toBe(catalogProduct)
+    expect(energyProduct).toBe(catalogProduct)
   })
 
   it('places single-07 only in the existing heart direction', () => {
@@ -110,10 +133,18 @@ describe('information product catalog', () => {
     expect(getInformationProducts('joints')).toEqual([catalogProduct])
   })
 
-  it('does not duplicate products across information directions', () => {
+  it('keeps direction rows unique and permits only the approved cross-category SKU', () => {
     const configuredProductIds = Object.values(informationProductIdsByDirection).flat()
+    const crossCategoryProductIds = [...new Set(configuredProductIds)].filter(
+      (productId) => configuredProductIds.filter((candidate) => candidate === productId).length > 1,
+    )
 
-    expect(new Set(configuredProductIds).size).toBe(configuredProductIds.length)
+    expect(
+      Object.values(informationProductIdsByDirection).every(
+        (productIds) => new Set(productIds).size === productIds.length,
+      ),
+    ).toBe(true)
+    expect(crossCategoryProductIds).toEqual(['single-16'])
   })
 
   it('places the flax collagen product only in digestion', () => {

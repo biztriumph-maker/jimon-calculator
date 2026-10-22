@@ -988,3 +988,121 @@ describe('Jinmu chicory pressed candy product detail', () => {
     )
   })
 })
+
+describe('Baoqin bovine bone marrow peptide product detail', () => {
+  it('connects the existing single-16 product and preserves commercial data', () => {
+    const detail = informationProductDetailById.get('single-16')
+    const product = productById.get('single-16')
+
+    expect(detail?.screen).toBe('product-health-baoqin')
+    expect(product?.nameRu).toBe(
+      'Баоцин — прессованные таблетки с пептидами костного мозга КРС',
+    )
+    expect(product?.nameZh).toBe('葆青 · 牛骨髓肽压片糖果')
+    expect(product?.prices).toEqual({
+      0: 319,
+      10: 279,
+      20: 252,
+      30: 225,
+      40: 198,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/baoqin-hero.png',
+      alt: 'Голубая упаковка и белая баночка продукта Баоцин',
+      width: 1536,
+      height: 1024,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the approved introduction and ten team observations verbatim', () => {
+    const summary = informationProductDetailById.get('single-16')?.summary
+
+    expect(summary?.intro).toBe(
+      'Баоцин JIMON — пищевой продукт в форме прессованных таблеток на основе пептидов бычьего костного мозга и комплекса питательных компонентов. Формула сочетает пептиды костного мозга и пептиды бычьего происхождения, разработана для дополнения ежедневного рациона и питательной поддержки организма.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Для поддержки иммунитета. Способствует укреплению защитных сил организма, повышает устойчивость к инфекциям и вирусам.',
+      'При проблемах с костями и суставами. Поддерживает здоровье костей и суставов, способствует восстановлению хрящевой ткани, уменьшает дискомфорт и скованность.',
+      'При усталости и снижении энергии. Помогает восстановить силы, повышает работоспособность и выносливость, улучшает общее самочувствие.',
+      'В период восстановления после болезней и нагрузок. Ускоряет восстановление организма, поддерживает регенерацию тканей и жизненный тонус.',
+      'Для людей старшего возраста. Способствует поддержанию костной плотности и подвижности суставов, помогает замедлять процессы старения.',
+      'При снижении памяти и концентрации. Поддерживает работу мозга, улучшает память, концентрацию внимания и когнитивные функции.',
+      'При повышенных умственных и физических нагрузках. Способствует сохранению ресурсов организма, помогает справляться со стрессом и переутомлением.',
+      'Для поддержки здоровья кроветворной системы. Способствует нормальному кроветворению и улучшению состава крови.',
+      'Для улучшения состояния кожи, волос и ногтей. Способствует питанию клеток, повышает эластичность кожи, укрепляет волосы и ногти.',
+      'Для общего укрепления организма. Способствует поддержанию баланса жизненно важных систем и улучшению качества жизни.',
+    ])
+    expect(summary?.properties).toHaveLength(10)
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the exact facts and five composition items in order', () => {
+    const detail = informationProductDetailById.get('single-16')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      {
+        label: 'Название',
+        value:
+          'Баоцин — прессованные таблетки с пептидами костного мозга КРС (葆青 · 牛骨髓肽压片糖果).',
+      },
+      { label: 'Форма выпуска', value: 'Прессованные таблетки.' },
+      { label: 'Количество', value: '90 таблеток.' },
+      { label: 'Масса одной таблетки', value: '0,9 г.' },
+      { label: 'Общая масса', value: '81 г.' },
+      {
+        label: 'Категория',
+        value: 'Пищевой продукт JIMON на основе пептидов костного мозга.',
+      },
+      { label: 'Хранение', value: 'В сухом, хорошо проветриваемом месте.' },
+      { label: 'Срок годности', value: '24 месяца.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Мальтит.',
+      'Порошок пептидов бычьего костного мозга.',
+      'Пищевой кукурузный крахмал.',
+      'Порошок пептидов бычьего происхождения (牛鞭肽粉).',
+      'Порошок конжака.',
+    ])
+  })
+
+  it('uses only the approved usage text and restrictions', () => {
+    const usage = informationProductDetailById
+      .get('single-16')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.sourceBlock?.text).toBe(
+      'Принимать 2 раза в день по 1–2 таблетки, запивая тёплой водой.',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Не употреблять при индивидуальной непереносимости компонентов.',
+      'Не употреблять при повреждении упаковки или признаках порчи продукта.',
+    ])
+  })
+
+  it('keeps one detail config for the shared SKU and previous cards unchanged', () => {
+    expect(informationProductDetailById.get('single-03')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-05')?.summary.properties).toHaveLength(9)
+    expect(informationProductDetailById.get('single-09')?.summary.properties).toHaveLength(6)
+    expect(informationProductDetailById.get('single-15')?.summary.properties).toHaveLength(10)
+    expect(informationProductDetailById.get('single-19')?.summary.properties).toHaveLength(5)
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-16')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})
