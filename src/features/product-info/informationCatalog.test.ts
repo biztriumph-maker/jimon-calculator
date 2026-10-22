@@ -67,6 +67,19 @@ describe('information product catalog', () => {
     expect(getInformationProducts('heart')).toEqual([catalogProduct])
   })
 
+  it('places the bone collagen product only in the existing joints direction', () => {
+    const catalogProduct = productById.get('single-05')
+    const configuredDirections = Object.entries(informationProductIdsByDirection)
+      .filter(([, productIds]) => productIds.includes('single-05'))
+      .map(([directionId]) => directionId)
+
+    expect(informationProductIdsByDirection.joints).toEqual(['single-05'])
+    expect(getMissingInformationProductIds('joints')).toEqual([])
+    expect(getInformationDirectionId('single-05')).toBe('joints')
+    expect(configuredDirections).toEqual(['joints'])
+    expect(getInformationProducts('joints')).toEqual([catalogProduct])
+  })
+
   it('does not duplicate products across information directions', () => {
     const configuredProductIds = Object.values(informationProductIdsByDirection).flat()
 

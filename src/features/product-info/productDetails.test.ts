@@ -638,3 +638,120 @@ describe('Safora applicator product detail', () => {
     )
   })
 })
+
+describe('bone collagen product detail', () => {
+  it('connects the existing single-05 product to joints and preserves commercial data', () => {
+    const detail = informationProductDetailById.get('single-05')
+    const product = productById.get('single-05')
+
+    expect(detail?.screen).toBe('product-health-joints-bone-collagen')
+    expect(product?.nameRu).toBe('Пептидный костный коллаген')
+    expect(product?.nameZh).toBe('骨胶原蛋白肽粉固体饮料')
+    expect(product?.image).toContain('T05_kostnyy_peptidnyy_kollagen')
+    expect(product?.prices).toEqual({
+      0: 319,
+      10: 279,
+      20: 252,
+      30: 225,
+      40: 198,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/kostnyy-kollagen-hero.png',
+      alt: 'Упаковка пептидного костного коллагена',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the exact introduction and nine team statements in order', () => {
+    const summary = informationProductDetailById.get('single-05')?.summary
+
+    expect(summary?.intro).toBe(
+      'Пептидный костный коллаген JIMON — растворимый пищевой продукт с высоким содержанием костных коллагеновых пептидов. Формула содержит 50% коллагеновых пептидов, кокосовый порошок и трегалозу. Благодаря мелким пептидам продукт хорошо растворяется и подходит для дополнения ежедневного рациона белковыми компонентами.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Активирует клеточную регенерацию.',
+      'Эффективен при артрозах, артритах, остеопорозах, остеохондрозах и язве желудка.',
+      'Укрепляет кости и суставы. Эффективен при болях в суставах, копчике и позвоночнике.',
+      'Восстанавливает хрящи.',
+      'Повышает иммунитет.',
+      'Эффективно решает проблемы выпадения волос, улучшает состояние кожи и ногтей.',
+      'Поддерживает работу печени, сердца, сосудов.',
+      'Быстрая регенерация при переломах, особенно у пожилых людей.',
+      'Восстанавливает ткани после детоксикации, ускоряет омоложение.',
+    ])
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the exact facts and three composition items', () => {
+    const detail = informationProductDetailById.get('single-05')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      {
+        label: 'Название',
+        value: 'Пептидный костный коллаген (骨胶原蛋白肽粉固体饮料).',
+      },
+      { label: 'Форма выпуска', value: 'Растворимый порошковый напиток.' },
+      { label: 'Количество', value: '20 пакетиков.' },
+      { label: 'Масса одного пакетика', value: '10 г.' },
+      { label: 'Общая масса', value: '200 г.' },
+      {
+        label: 'Категория',
+        value: 'Пищевой продукт JIMON с костными коллагеновыми пептидами.',
+      },
+      {
+        label: 'Хранение',
+        value: 'В сухом прохладном месте, в герметично закрытой упаковке.',
+      },
+      { label: 'Срок годности', value: '24 месяца.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Костные коллагеновые пептиды (50%).',
+      'Кокосовый порошок.',
+      'Трегалоза.',
+    ])
+  })
+
+  it('uses the exact preparation text and three restrictions', () => {
+    const usage = informationProductDetailById
+      .get('single-05')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.sourceBlock?.text).toBe(
+      '1. Высыпать содержимое одного пакетика (10 г) в чашку.\n2. Добавить приблизительно 150 мл тёплой или горячей воды.\n3. Тщательно размешать до растворения.\n\nМожно употреблять утром, в течение дня, после физической активности или перед сном.',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Не рекомендуется младенцам, беременным и кормящим женщинам.',
+      'Не употреблять при индивидуальной аллергии на компоненты.',
+      'Не употреблять при повреждении упаковки, постороннем запахе или признаках порчи продукта.',
+    ])
+  })
+
+  it('keeps every product detail id unique and previous cards unchanged', () => {
+    expect(informationProductDetailById.get('single-03')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-04')?.summary.properties).toHaveLength(8)
+    expect(informationProductDetailById.get('single-18')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-06')?.summary.properties).toHaveLength(10)
+    expect(informationProductDetailById.get('single-07')?.summary.properties).toHaveLength(9)
+    expect(informationProductDetailById.get('single-09')?.summary.properties).toHaveLength(6)
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-05')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})

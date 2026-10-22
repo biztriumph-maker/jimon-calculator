@@ -9,6 +9,7 @@ export type Screen =
   | 'product-health-heart'
   | 'product-health-heart-syue-lan-do'
   | 'product-health-joints'
+  | 'product-health-joints-bone-collagen'
   | 'product-health-digestion'
   | 'product-health-digestion-birunkan'
   | 'product-health-digestion-flax-collagen'
@@ -53,6 +54,7 @@ export const loadAppState = (): StoredAppState => {
       'product-health-heart',
       'product-health-heart-syue-lan-do',
       'product-health-joints',
+      'product-health-joints-bone-collagen',
       'product-health-digestion',
       'product-health-digestion-birunkan',
       'product-health-digestion-flax-collagen',
