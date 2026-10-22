@@ -870,3 +870,121 @@ describe('Luo Han Guo drink product detail', () => {
     )
   })
 })
+
+describe('Jinmu chicory pressed candy product detail', () => {
+  it('connects the existing single-15 product and preserves commercial data', () => {
+    const detail = informationProductDetailById.get('single-15')
+    const product = productById.get('single-15')
+
+    expect(detail?.screen).toBe('product-health-digestion-czinmu')
+    expect(product?.nameRu).toBe('«Цзиньму» — прессованные конфеты с цикорием')
+    expect(product?.nameZh).toBe('菊苣压片糖果')
+    expect(product?.prices).toEqual({
+      0: 319,
+      10: 279,
+      20: 252,
+      30: 225,
+      40: 198,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/tsikoriy-pressovannye-tabletki-hero.png',
+      alt: 'Розовая упаковка прессованных конфет «Цзиньму» с цикорием',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the approved introduction and ten team observations verbatim', () => {
+    const summary = informationProductDetailById.get('single-15')?.summary
+
+    expect(summary?.intro).toBe(
+      '«Цзиньму» JIMON — пищевой продукт в форме прессованных таблеток на основе цикория и корневища купены (хуанцзин). Формула сочетает растительные компоненты, традиционно используемые в китайском питании, и предназначена для дополнения ежедневного рациона.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Укрепление иммунитета. Повышает устойчивость организма к вирусам, бактериям и простудным заболеваниям.',
+      'Противовирусная и антибактериальная защита. Обладает противовирусными и антибактериальными свойствами, препятствует размножению патогенных микроорганизмов.',
+      'Поддержка здорового пищеварения. Способствует улучшению микрофлоры кишечника, нормализации пищеварения и мягкой регуляции работы кишечника.',
+      'Поддержка печени и детоксикация. Способствует защите клеток печени, помогает выводить токсины и поддерживает природные процессы детоксикации.',
+      'Повышение жизненного тонуса и выносливости. Снижает усталость, повышает энергию и работоспособность, улучшает общее самочувствие.',
+      'Иммуномодулирующее действие. Регулирует и поддерживает работу иммунной системы, помогает организму адаптироваться к неблагоприятным воздействиям.',
+      'Профилактика и поддержка при раке. Обладает противоопухолевой активностью, способствует защите и восстановлению организма.',
+      'Защита от излучения и окислительного стресса. Снижает вредное воздействие излучения, обладает антиоксидантными свойствами, защищает клетки от повреждений.',
+      'Поддержка роста волос и их потемнения. Способствует укреплению корней волос, стимулирует их рост и помогает замедлять процессы поседения.',
+      'Противовоспалительное действие. Помогает уменьшать воспаление в организме, поддерживает здоровье суставов и других тканей.',
+    ])
+    expect(summary?.properties).toHaveLength(10)
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the exact facts and five composition items in order', () => {
+    const detail = informationProductDetailById.get('single-15')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      {
+        label: 'Название',
+        value: '«Цзиньму» — прессованные конфеты с цикорием (菊苣压片糖果)',
+      },
+      { label: 'Форма выпуска', value: 'Прессованные таблетки.' },
+      { label: 'Количество', value: '90 таблеток.' },
+      { label: 'Масса одной таблетки', value: '0,9 г.' },
+      { label: 'Общая масса', value: '81 г.' },
+      {
+        label: 'Категория',
+        value: 'Пищевой продукт JIMON на основе растительных компонентов.',
+      },
+      { label: 'Хранение', value: 'В сухом, хорошо проветриваемом месте.' },
+      { label: 'Срок годности', value: '24 месяца.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Мальтит.',
+      'Порошок цикория.',
+      'Порошок корневища купены (хуанцзин, 黄精).',
+      'Пищевой кукурузный крахмал.',
+      'Порошок конжака.',
+    ])
+    expect(composition?.items).toHaveLength(5)
+  })
+
+  it('uses only the approved usage text and restrictions', () => {
+    const usage = informationProductDetailById
+      .get('single-15')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.sourceBlock?.text).toBe(
+      'Принимать два раза в день по 1–2 таблетки, запивая тёплой водой.',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Не употреблять при индивидуальной непереносимости компонентов.',
+      'При повреждении упаковки или признаках порчи продукт не употреблять.',
+    ])
+  })
+
+  it('keeps every product detail id unique and previous cards unchanged', () => {
+    expect(informationProductDetailById.get('single-03')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-04')?.summary.properties).toHaveLength(8)
+    expect(informationProductDetailById.get('single-18')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-06')?.summary.properties).toHaveLength(10)
+    expect(informationProductDetailById.get('single-07')?.summary.properties).toHaveLength(9)
+    expect(informationProductDetailById.get('single-09')?.summary.properties).toHaveLength(6)
+    expect(informationProductDetailById.get('single-19')?.summary.properties).toHaveLength(5)
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-15')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})

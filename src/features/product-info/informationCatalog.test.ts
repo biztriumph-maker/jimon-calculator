@@ -56,6 +56,22 @@ describe('information product catalog', () => {
     expect(informationProduct).toBe(catalogProduct)
   })
 
+  it('uses the canonical single-15 name only in the existing digestion direction', () => {
+    const catalogProduct = productById.get('single-15')
+    const informationProduct = getInformationProducts('digestion').find(
+      (product) => product.id === 'single-15',
+    )
+    const configuredDirections = Object.entries(informationProductIdsByDirection)
+      .filter(([, productIds]) => productIds.includes('single-15'))
+      .map(([directionId]) => directionId)
+
+    expect(catalogProduct?.nameRu).toBe('«Цзиньму» — прессованные конфеты с цикорием')
+    expect(catalogProduct?.nameZh).toBe('菊苣压片糖果')
+    expect(getInformationDirectionId('single-15')).toBe('digestion')
+    expect(configuredDirections).toEqual(['digestion'])
+    expect(informationProduct).toBe(catalogProduct)
+  })
+
   it('connects the canonical single-09 product to the vision direction', () => {
     const catalogProduct = productById.get('single-09')
     const informationProduct = getInformationProducts('vision')[0]
