@@ -454,6 +454,115 @@ export const informationProductDetails: readonly ProductDetailConfig[] = [
     ],
   },
   {
+    productId: 'single-07',
+    screen: 'product-health-heart-syue-lan-do',
+    heroImage: {
+      src: '/images/syue-lan-do-krovochistka-hero.png',
+      alt: 'Синяя упаковка Сюэ Лань До (Кровочистка)',
+      width: 1448,
+      height: 1086,
+    },
+    summary: {
+      intro:
+        'Сюэ Лань До — пищевой продукт JIMON в форме прессованных таблеток на основе ангелики кейске (ашитабы), натто и комплекса растительных компонентов. Формула сочетает растительные экстракты, пищевые волокна и белковые компоненты для дополнения ежедневного рациона.',
+      propertiesTitle: PRODUCT_DETAIL_PROPERTIES_TITLE,
+      properties: [
+        {
+          text: 'Растворяет фибриновые сгустки/тромбы.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Улучшает кровообращение.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Уменьшает вязкость крови (густая кровь).',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Снижает риски инсульта и инфаркта.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Повышает энергию.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Очищает сосуды — главный путь доставки питания к клеткам.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Эффективен при: варикозном расширении вен, кожных высыпаниях, атопическом дерматите, псориазе, акне, аллергии и зуде, головных болях, давлении.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Улучшает зрение.',
+          verificationStatus: 'requires-confirmation',
+        },
+        {
+          text: 'Оказывает лимфодренажный эффект.',
+          verificationStatus: 'requires-confirmation',
+        },
+      ],
+    },
+    sections: [
+      {
+        id: 'characteristics',
+        label: 'О продукте',
+        title: 'О продукте',
+        facts: [
+          {
+            label: 'Название',
+            value: 'Сюэ Лань До (Кровочистка) (明日叶纳豆压片糖果).',
+          },
+          { label: 'Форма выпуска', value: 'Прессованные таблетки.' },
+          { label: 'Количество', value: '60 таблеток.' },
+          { label: 'Масса одной таблетки', value: '0,7 г.' },
+          { label: 'Общая масса', value: '42 г.' },
+          { label: 'Категория', value: 'Пищевой продукт JIMON.' },
+          { label: 'Хранение', value: 'В сухом проветриваемом месте.' },
+        ],
+      },
+      {
+        id: 'composition',
+        label: 'Состав',
+        title: 'Состав',
+        items: [
+          'Сорбитол.',
+          'Ангелика кейске (ашитаба, 明日叶).',
+          'Порошок натто.',
+          'Инулин.',
+          'Порошок кукурузных рылец.',
+          'Томатный порошок.',
+          'Порошок сладкого миндаля.',
+          'Порошок семян кассии (决明子).',
+          'Белок земляного червя (地龙蛋白).',
+          'Порошок гардении.',
+          'Ксилит.',
+          'Стеарат магния.',
+          'Сукралоза.',
+        ],
+      },
+      {
+        id: 'usage',
+        label: 'Применение',
+        title: 'Применение',
+        sourceBlock: {
+          text: 'Рекомендуется принимать утром и вечером по 1–2 таблетки за один приём.',
+          editorialSource: {
+            labelTranslation:
+              'Рекомендуется принимать утром и вечером по 1–2 таблетки за один приём.',
+            verificationStatus: 'requires-confirmation',
+          },
+        },
+        restrictions: [
+          'Продукт не предназначен для младенцев, маленьких детей, беременных и кормящих женщин.',
+          'Не рекомендуется при аллергии на компоненты.',
+        ],
+      },
+    ],
+  },
+  {
     productId: 'single-09',
     screen: 'product-health-vision-safora',
     heroImage: {

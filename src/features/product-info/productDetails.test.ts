@@ -405,6 +405,125 @@ describe('flax collagen porridge product detail', () => {
   })
 })
 
+describe('Syue Lan Do blood cleanse product detail', () => {
+  it('connects the existing single-07 product and preserves its prices', () => {
+    const detail = informationProductDetailById.get('single-07')
+    const product = productById.get('single-07')
+
+    expect(detail?.screen).toBe('product-health-heart-syue-lan-do')
+    expect(product?.nameRu).toBe('Сюэ Лань До (Кровочистка)')
+    expect(product?.nameZh).toBe('明日叶纳豆压片糖果')
+    expect(product?.image).toContain('T07_syue_lan_do_krovochistka')
+    expect(product?.prices).toEqual({
+      0: 499,
+      10: 464,
+      20: 429,
+      30: 394,
+      40: 359,
+      50: null,
+      60: null,
+    })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/syue-lan-do-krovochistka-hero.png',
+      alt: 'Синяя упаковка Сюэ Лань До (Кровочистка)',
+      width: 1448,
+      height: 1086,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the approved introduction and nine team statements verbatim', () => {
+    const summary = informationProductDetailById.get('single-07')?.summary
+
+    expect(summary?.intro).toBe(
+      'Сюэ Лань До — пищевой продукт JIMON в форме прессованных таблеток на основе ангелики кейске (ашитабы), натто и комплекса растительных компонентов. Формула сочетает растительные экстракты, пищевые волокна и белковые компоненты для дополнения ежедневного рациона.',
+    )
+    expect(summary?.propertiesTitle).toBe(PRODUCT_DETAIL_PROPERTIES_TITLE)
+    expect(summary?.properties.map((property) => property.text)).toEqual([
+      'Растворяет фибриновые сгустки/тромбы.',
+      'Улучшает кровообращение.',
+      'Уменьшает вязкость крови (густая кровь).',
+      'Снижает риски инсульта и инфаркта.',
+      'Повышает энергию.',
+      'Очищает сосуды — главный путь доставки питания к клеткам.',
+      'Эффективен при: варикозном расширении вен, кожных высыпаниях, атопическом дерматите, псориазе, акне, аллергии и зуде, головных болях, давлении.',
+      'Улучшает зрение.',
+      'Оказывает лимфодренажный эффект.',
+    ])
+    expect(
+      summary?.properties.every(
+        (property) => property.verificationStatus === 'requires-confirmation',
+      ),
+    ).toBe(true)
+  })
+
+  it('provides the exact characteristics and composition in order', () => {
+    const detail = informationProductDetailById.get('single-07')
+    const about = detail?.sections.find((section) => section.id === 'characteristics')
+    const composition = detail?.sections.find((section) => section.id === 'composition')
+
+    expect(detail?.sections.map((section) => section.id)).toEqual([
+      'characteristics',
+      'composition',
+      'usage',
+    ])
+    expect(about?.facts).toEqual([
+      {
+        label: 'Название',
+        value: 'Сюэ Лань До (Кровочистка) (明日叶纳豆压片糖果).',
+      },
+      { label: 'Форма выпуска', value: 'Прессованные таблетки.' },
+      { label: 'Количество', value: '60 таблеток.' },
+      { label: 'Масса одной таблетки', value: '0,7 г.' },
+      { label: 'Общая масса', value: '42 г.' },
+      { label: 'Категория', value: 'Пищевой продукт JIMON.' },
+      { label: 'Хранение', value: 'В сухом проветриваемом месте.' },
+    ])
+    expect(composition?.items).toEqual([
+      'Сорбитол.',
+      'Ангелика кейске (ашитаба, 明日叶).',
+      'Порошок натто.',
+      'Инулин.',
+      'Порошок кукурузных рылец.',
+      'Томатный порошок.',
+      'Порошок сладкого миндаля.',
+      'Порошок семян кассии (决明子).',
+      'Белок земляного червя (地龙蛋白).',
+      'Порошок гардении.',
+      'Ксилит.',
+      'Стеарат магния.',
+      'Сукралоза.',
+    ])
+  })
+
+  it('uses only the approved usage text and two restrictions', () => {
+    const usage = informationProductDetailById
+      .get('single-07')
+      ?.sections.find((section) => section.id === 'usage')
+
+    expect(usage?.sourceBlock?.text).toBe(
+      'Рекомендуется принимать утром и вечером по 1–2 таблетки за один приём.',
+    )
+    expect(usage?.restrictions).toEqual([
+      'Продукт не предназначен для младенцев, маленьких детей, беременных и кормящих женщин.',
+      'Не рекомендуется при аллергии на компоненты.',
+    ])
+    expect(usage?.restrictions).toHaveLength(2)
+  })
+
+  it('keeps approved product details unchanged and product ids unique', () => {
+    expect(informationProductDetailById.get('single-03')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-04')?.summary.properties).toHaveLength(8)
+    expect(informationProductDetailById.get('single-18')?.summary.properties).toHaveLength(7)
+    expect(informationProductDetailById.get('single-06')?.summary.properties).toHaveLength(10)
+    expect(informationProductDetailById.get('single-09')?.summary.properties).toHaveLength(6)
+    expect(informationProductDetails.filter((detail) => detail.productId === 'single-07')).toHaveLength(1)
+    expect(new Set(informationProductDetails.map((detail) => detail.productId)).size).toBe(
+      informationProductDetails.length,
+    )
+  })
+})
+
 describe('Safora applicator product detail', () => {
   it('connects single-09 to its canonical catalog product and dedicated hero', () => {
     const detail = informationProductDetailById.get('single-09')

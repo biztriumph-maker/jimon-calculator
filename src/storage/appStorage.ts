@@ -7,6 +7,7 @@ export type Screen =
   | 'product-health-vision'
   | 'product-health-vision-safora'
   | 'product-health-heart'
+  | 'product-health-heart-syue-lan-do'
   | 'product-health-joints'
   | 'product-health-digestion'
   | 'product-health-digestion-birunkan'
@@ -50,6 +51,7 @@ export const loadAppState = (): StoredAppState => {
       'product-health-vision',
       'product-health-vision-safora',
       'product-health-heart',
+      'product-health-heart-syue-lan-do',
       'product-health-joints',
       'product-health-digestion',
       'product-health-digestion-birunkan',

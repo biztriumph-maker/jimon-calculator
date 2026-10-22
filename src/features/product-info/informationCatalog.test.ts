@@ -54,6 +54,19 @@ describe('information product catalog', () => {
     expect(informationProduct).toBe(catalogProduct)
   })
 
+  it('places single-07 only in the existing heart direction', () => {
+    const catalogProduct = productById.get('single-07')
+    const configuredDirections = Object.entries(informationProductIdsByDirection)
+      .filter(([, productIds]) => productIds.includes('single-07'))
+      .map(([directionId]) => directionId)
+
+    expect(informationProductIdsByDirection.heart).toEqual(['single-07'])
+    expect(getMissingInformationProductIds('heart')).toEqual([])
+    expect(getInformationDirectionId('single-07')).toBe('heart')
+    expect(configuredDirections).toEqual(['heart'])
+    expect(getInformationProducts('heart')).toEqual([catalogProduct])
+  })
+
   it('does not duplicate products across information directions', () => {
     const configuredProductIds = Object.values(informationProductIdsByDirection).flat()
 

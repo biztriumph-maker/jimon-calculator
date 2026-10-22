@@ -1,11 +1,12 @@
 import { productById } from '../../data/catalog'
 import type { Product } from '../../domain/types'
 
-export type InformationDirectionId = 'digestion' | 'vision'
+export type InformationDirectionId = 'digestion' | 'heart' | 'vision'
 
 export const informationProductIdsByDirection: Readonly<
   Record<InformationDirectionId, readonly Product['id'][]>
 > = {
+  heart: ['single-07'],
   digestion: [
     'single-03',
     'single-06',
