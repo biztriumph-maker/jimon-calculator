@@ -49,12 +49,35 @@ describe('health direction configuration', () => {
     expect(healthDirections.map((direction) => direction.id)).toEqual([
       'vision',
       'heart',
+      'memory',
       'joints',
       'digestion',
       'weight',
       'energy',
+      'men-women',
       'respiratory',
       'other',
     ])
+  })
+  it('has the final ten-card health order, unique IDs and approved public images', () => {
+    const visible = getVisibleHealthDirections()
+
+    expect(visible).toHaveLength(10)
+    expect(visible.map((direction) => direction.id)).toEqual([
+      'vision',
+      'heart',
+      'memory',
+      'joints',
+      'digestion',
+      'weight',
+      'energy',
+      'men-women',
+      'respiratory',
+      'other',
+    ])
+    expect(new Set(visible.map((direction) => direction.id)).size).toBe(10)
+    expect(visible.find((direction) => direction.id === 'memory')?.image).toBe('/images/health-memory-brain.png')
+    expect(visible.find((direction) => direction.id === 'men-women')?.image).toBe('/images/health-men-women.png')
+    expect(visible.every((direction) => direction.screen.startsWith('product-health-'))).toBe(true)
   })
 })

@@ -14,12 +14,14 @@ export type HealthDirectionConfig = DirectionConfig
 export const healthDirections: readonly HealthDirectionConfig[] = [
   { id: 'vision', title: 'Зрение', description: 'Чёткость взгляда в любом возрасте', image: visionImage, imageStatus: 'approved-extract', order: 1, screen: 'product-health-vision', visible: true },
   { id: 'heart', title: 'Сердце и сосуды', description: 'Забота о главном каждый день', image: heartImage, imageStatus: 'approved-extract', order: 2, screen: 'product-health-heart', visible: true },
-  { id: 'joints', title: 'Суставы и кости', description: 'Лёгкость движений и активная жизнь', image: jointsImage, imageStatus: 'approved-extract', order: 3, screen: 'product-health-joints', visible: true },
-  { id: 'digestion', title: 'Пищеварение', description: 'Комфорт и баланс каждый день', image: digestionImage, imageStatus: 'approved-extract', order: 4, screen: 'product-health-digestion', visible: true },
-  { id: 'weight', title: 'Контроль веса', description: 'Гармоничная фигура и лёгкость', image: weightImage, imageStatus: 'approved-extract', order: 5, screen: 'product-health-weight', visible: true },
-  { id: 'energy', title: 'Энергия и тонус', description: 'Больше сил для активной жизни', image: energyImage, imageStatus: 'approved-extract', order: 6, screen: 'product-health-energy', visible: true },
-  { id: 'respiratory', title: 'Дыхательные пути', description: 'Поддержка лёгких и дыхательных путей', image: respiratoryImage, imageStatus: 'approved', order: 7, screen: 'product-health-respiratory', visible: true },
-  { id: 'other', title: 'Другие продукты', description: 'Остальные направления здоровья JIMON', image: otherPlaceholder, imageStatus: 'placeholder', order: 8, screen: 'product-health-other', visible: true },
+  { id: 'memory', title: 'Память и работа мозга', description: 'Ясность мышления и концентрация', image: '/images/health-memory-brain.png', imageStatus: 'approved', order: 3, screen: 'product-health-memory', visible: true },
+  { id: 'joints', title: 'Суставы и кости', description: 'Лёгкость движений и активная жизнь', image: jointsImage, imageStatus: 'approved-extract', order: 4, screen: 'product-health-joints', visible: true },
+  { id: 'digestion', title: 'Пищеварение', description: 'Комфорт и баланс каждый день', image: digestionImage, imageStatus: 'approved-extract', order: 5, screen: 'product-health-digestion', visible: true },
+  { id: 'weight', title: 'Контроль веса', description: 'Гармоничная фигура и лёгкость', image: weightImage, imageStatus: 'approved-extract', order: 6, screen: 'product-health-weight', visible: true },
+  { id: 'energy', title: 'Энергия и тонус', description: 'Больше сил для активной жизни', image: energyImage, imageStatus: 'approved-extract', order: 7, screen: 'product-health-energy', visible: true },
+  { id: 'men-women', title: 'Мужское и женское здоровье', description: 'Баланс и поддержка каждый день', image: '/images/health-men-women.png', imageStatus: 'approved', order: 8, screen: 'product-health-men-women', visible: true },
+  { id: 'respiratory', title: 'Дыхательные пути', description: 'Поддержка лёгких и дыхательных путей', image: respiratoryImage, imageStatus: 'approved', order: 9, screen: 'product-health-respiratory', visible: true },
+  { id: 'other', title: 'Другие продукты', description: 'Остальные направления здоровья JIMON', image: otherPlaceholder, imageStatus: 'placeholder', order: 10, screen: 'product-health-other', visible: true },
 ]
 
 export function getVisibleHealthDirections(

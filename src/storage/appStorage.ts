@@ -8,6 +8,7 @@ export type Screen =
   | 'product-health-vision-safora'
   | 'product-health-baoqin'
   | 'product-health-heart'
+  | 'product-health-memory'
   | 'product-health-heart-syue-lan-do'
   | 'product-health-joints'
   | 'product-health-joints-bone-collagen'
@@ -22,6 +23,7 @@ export type Screen =
   | 'product-health-digestion-dendrobium-ginseng'
   | 'product-health-weight'
   | 'product-health-energy'
+  | 'product-health-men-women'
   | 'product-health-respiratory'
   | 'product-health-other'
   | 'product-beauty'
@@ -58,6 +60,7 @@ export const loadAppState = (): StoredAppState => {
       'product-health-vision-safora',
       'product-health-baoqin',
       'product-health-heart',
+      'product-health-memory',
       'product-health-heart-syue-lan-do',
       'product-health-joints',
       'product-health-joints-bone-collagen',
@@ -72,6 +75,7 @@ export const loadAppState = (): StoredAppState => {
       'product-health-digestion-dendrobium-ginseng',
       'product-health-weight',
       'product-health-energy',
+      'product-health-men-women',
       'product-health-respiratory',
       'product-health-other',
       'product-beauty',
