@@ -49,7 +49,7 @@ export function PlanScreen({ start, orders, onBack, onMove, onEdit, onDelete }: 
   const startDiscount = start.mode === 'newcomer' ? 0 : start.discount
   return (
     <main className="screen plan-screen">
-      <BrandHeader onBack={onBack} compact />
+      <BrandHeader onBack={onBack} compact approved />
       <section className="plan-heading"><span className="eyebrow">Последовательный расчёт</span><h1>План покупок</h1><p>{orders.length} {orderWord}</p></section>
       {orders.length ? (
         <section className="order-list">

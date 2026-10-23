@@ -26,6 +26,8 @@
   --border: #dce4dd;
   --danger: #a52c2c;
   --shadow: 0 14px 38px rgba(14, 61, 33, 0.1);
+  --nav-control-size: 44px;
+  --nav-arrow-size: 22px;
 }
 
 * { box-sizing: border-box; }
@@ -77,13 +79,13 @@ button:focus-visible, input:focus-visible {
   .primary-button:not(:disabled):hover, .small-button:not(:disabled):hover { background: var(--jimon-action-hover); }
 }
 .icon-button {
-  width: 42px;
-  height: 42px;
+  width: var(--nav-control-size, 44px);
+  height: var(--nav-control-size, 44px);
   border: 0;
   border-radius: 50%;
   color: var(--green-800);
   background: var(--green-100);
-  font-size: 1.5rem;
+  font-size: var(--nav-arrow-size, 22px);
   line-height: 1;
 }
 .text-button { border: 0; background: transparent; padding: 10px; font-weight: 750; }

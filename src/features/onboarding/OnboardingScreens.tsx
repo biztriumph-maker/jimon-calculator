@@ -1,6 +1,10 @@
 import { BrandHeader } from '../../components/Common'
 import { UiIcon } from '../../components/Icons'
-import homeApprovedReference from '../../assets/ui/home/home-approved-reference-cropped-2x.png'
+import approvedLogo from '../../assets/brand/jimon-logo-approved.png'
+import homeNaturalBackground from '../../../JIMON_VISUAL_PREP/JIMON_PREMIUM_BACKGROUND/home-natural-background.png'
+import productHeaderOriginal from '../../../JIMON_VISUAL_PREP/product-header-original.png'
+import productHealthCard from '../../../JIMON_VISUAL_PREP/product-card-health.png'
+import productBeautyCard from '../../../JIMON_VISUAL_PREP/product-card-beauty.png'
 import productInfoApproved from '../../assets/ui/product-info/product-info-approved.png'
 import newcomerFoliageApproved from '../../assets/ui/onboarding/newcomer-foliage-approved-v3.png'
 import { DirectionCard } from './DirectionCard'
@@ -11,11 +15,38 @@ import { getVisibleHealthDirections } from './healthDirections'
 export function HomeScreen({ onProductInfo, onNewcomer, onPartner }: { onProductInfo: () => void; onNewcomer: () => void; onPartner: () => void }) {
   return (
     <main className="screen home-screen">
-      <div className="home-artwork">
-        <img className="home-approved-reference" src={homeApprovedReference} alt="" aria-hidden="true" />
-        <button className="home-hit-area home-hit-area--product-info" aria-label="О продукции JIMON" onClick={onProductInfo} />
-        <button className="home-hit-area home-hit-area--newcomer" aria-label="Я новичок" onClick={onNewcomer} />
-        <button className="home-hit-area home-hit-area--partner" aria-label="Я партнёр" onClick={onPartner} />
+      <div className="home-premium-background" style={{ backgroundImage: `url(${homeNaturalBackground})` }}>
+        <section className="home-hero-content">
+          <img className="home-hero-logo" src={approvedLogo} alt="JIMON" />
+          <p className="home-hero-tagline">Здоровье. Качество. Возможности.</p>
+          <h1>Ваш личный<br />калькулятор покупок</h1>
+          <p className="home-hero-subtitle">Просто. Понятно. Выгодно.</p>
+        </section>
+        <section className="home-card-list" aria-label="Разделы калькулятора">
+          <article className="home-card">
+            <button className="home-card__hit" aria-label="О продукции JIMON" onClick={onProductInfo}>
+              <span className="home-card__icon"><UiIcon name="package" /></span>
+              <span className="home-card__copy"><strong>О продукции JIMON</strong><small>Узнайте больше о продукции<br />и её направлениях</small></span><span className="home-card__arrow" aria-hidden="true">›</span>
+            </button>
+          </article>
+          <article className="home-card">
+            <button className="home-card__hit" aria-label="Я новичок" onClick={onNewcomer}>
+              <span className="home-card__icon"><UiIcon name="leaf" /></span>
+              <span className="home-card__copy"><strong>Я новичок</strong><small>Хочу понять, как правильно<br />сделать первые покупки<br />и получить скидку</small></span><span className="home-card__arrow" aria-hidden="true">›</span>
+            </button>
+          </article>
+          <article className="home-card">
+            <button className="home-card__hit" aria-label="Я партнёр" onClick={onPartner}>
+              <span className="home-card__icon"><UiIcon name="person" /></span>
+              <span className="home-card__copy"><strong>Я партнёр</strong><small>Я уже знаю свою скидку<br />и хочу рассчитать стоимость<br />товаров</small></span><span className="home-card__arrow" aria-hidden="true">›</span>
+            </button>
+          </article>
+        </section>
+        <section className="home-benefits" aria-label="Преимущества">
+          <div><UiIcon name="diamond" /><span>Актуальные<br />цены</span></div><i aria-hidden="true" />
+          <div><UiIcon name="shield" /><span>Учитываем<br />правила компании</span></div><i aria-hidden="true" />
+          <div><UiIcon name="heart" /><span>Удобно<br />на телефоне</span></div>
+        </section>
       </div>
     </main>
   )
@@ -33,10 +64,20 @@ export function ProductInfoScreen({
   return (
     <main className="screen product-info-screen">
       <div className="product-info-artwork">
-        <img className="product-info-approved-reference" src={productInfoApproved} alt="" aria-hidden="true" />
-        <button className="product-info-hit-area product-info-hit-area--back" aria-label="Назад на главную" onClick={onBack} />
-        <button className="product-info-hit-area product-info-hit-area--health" aria-label="Здоровье" onClick={onHealth} />
-        <button className="product-info-hit-area product-info-hit-area--beauty" aria-label="Красота" onClick={onBeauty} />
+        <div className="product-info-header-fragment">
+          <img src={productHeaderOriginal} alt="" aria-hidden="true" />
+          <button className="product-info-hit-area product-info-hit-area--back" aria-label="Назад на главную" onClick={onBack} />
+        </div>
+        <div className="product-info-card-list">
+          <div className="product-info-card-fragment">
+            <img src={productHealthCard} alt="" aria-hidden="true" />
+            <button className="product-info-hit-area" aria-label="Здоровье" onClick={onHealth} />
+          </div>
+          <div className="product-info-card-fragment">
+            <img src={productBeautyCard} alt="" aria-hidden="true" />
+            <button className="product-info-hit-area" aria-label="Красота" onClick={onBeauty} />
+          </div>
+        </div>
       </div>
     </main>
   )
