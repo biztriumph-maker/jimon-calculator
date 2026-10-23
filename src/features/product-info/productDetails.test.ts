@@ -1113,8 +1113,8 @@ describe('Dendrobium ginseng product detail', () => {
     const product = productById.get('single-22')
 
     expect(detail?.screen).toBe('product-health-digestion-dendrobium-ginseng')
-    expect(product?.nameRu).toBe('Тонизирующий продукт с женьшенем и дендробиумом')
-    expect(product?.nameZh).toBe('石斛胚芽人参粉')
+    expect(product?.nameRu).toBe('Тонизирующий напиток с женьшенем и дендробиумом')
+    expect(product?.nameZh).toBe('石斛胚芽人参粉固体饮料')
     expect(product?.prices).toEqual({ 0: 319, 10: 279, 20: 252, 30: 225, 40: 198, 50: null, 60: null })
     expect(detail?.heroImage).toEqual({
       src: '/images/dendrobium-ginseng-powder-hero.png',
@@ -1140,5 +1140,13 @@ describe('Dendrobium ginseng product detail', () => {
       'Гидрокарбонат натрия.',
     ])
     expect(usage?.restrictions).toHaveLength(3)
+  })
+  it('uses one approved Russian name for catalog and detail heading', () => {
+    const product = productById.get('single-22')
+    const detail = informationProductDetailById.get('single-22')
+
+    expect(product?.nameRu).toBe('Тонизирующий напиток с женьшенем и дендробиумом')
+    expect(detail?.productId).toBe(product?.id)
+    expect(product?.nameRu).not.toBe('Тонизирующий продукт с женьшенем и дендробиумом')
   })
 })
