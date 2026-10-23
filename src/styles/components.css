@@ -724,6 +724,11 @@
 .health-direction-card[data-direction-id='respiratory'] .health-direction-card__media img {
   object-position: center 74%;
 }
+.health-direction-card[data-direction-id="memory"] .health-direction-card__media img,
+.health-direction-card[data-direction-id="men-women"] .health-direction-card__media img {
+  object-fit: contain;
+  background: #eef5e8;
+}
 .health-direction-card__arrow {
   position: absolute;
   z-index: 3;
