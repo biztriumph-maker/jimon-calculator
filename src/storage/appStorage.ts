@@ -18,6 +18,7 @@ export type Screen =
   | 'product-health-digestion-liver-peptide-turmeric'
   | 'product-health-digestion-luohan-guo'
   | 'product-health-digestion-czinmu'
+  | 'product-health-digestion-jueming-oolong'
   | 'product-health-digestion-dendrobium-ginseng'
   | 'product-health-weight'
   | 'product-health-energy'
@@ -67,6 +68,7 @@ export const loadAppState = (): StoredAppState => {
       'product-health-digestion-liver-peptide-turmeric',
       'product-health-digestion-luohan-guo',
       'product-health-digestion-czinmu',
+      'product-health-digestion-jueming-oolong',
       'product-health-digestion-dendrobium-ginseng',
       'product-health-weight',
       'product-health-energy',

@@ -1150,3 +1150,33 @@ describe('Dendrobium ginseng product detail', () => {
     expect(product?.nameRu).not.toBe('Тонизирующий продукт с женьшенем и дендробиумом')
   })
 })
+
+describe('Jueming oolong product detail', () => {
+  it('connects the existing single-36 product without changing commercial data', () => {
+    const detail = informationProductDetailById.get('single-36')
+    const product = productById.get('single-36')
+
+    expect(detail?.screen).toBe('product-health-digestion-jueming-oolong')
+    expect(product?.nameRu).toBe('\u0427\u0430\u0439 \u0441 \u043a\u0430\u0441\u0441\u0438\u0435\u0439 \u0438 \u0443\u043b\u0443\u043d\u043e\u043c')
+    expect(product?.nameZh).toBe('\u51b3\u660e\u4e4c\u9f99\u8336')
+    expect(product?.prices).toEqual({ 0: 319, 10: 276, 20: 246, 30: 216, 40: 186, 50: null, 60: null })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/jueming-oolong-tea-hero.png',
+      alt: '\u0416\u0451\u043b\u0442\u043e-\u0437\u0435\u043b\u0451\u043d\u0430\u044f \u0443\u043f\u0430\u043a\u043e\u0432\u043a\u0430 \u0447\u0430\u044f \u0441 \u043a\u0430\u0441\u0441\u0438\u0435\u0439 \u0438 \u0443\u043b\u0443\u043d\u043e\u043c',
+      width: 1536,
+      height: 1024,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps four observations, seven ingredients, and three restrictions', () => {
+    const detail = informationProductDetailById.get('single-36')!
+    const composition = detail.sections.find((section) => section.id === 'composition')
+    const usage = detail.sections.find((section) => section.id === 'usage')
+
+    expect(detail.summary.properties).toHaveLength(4)
+    expect(detail.summary.properties.every((property) => property.verificationStatus === 'requires-confirmation')).toBe(true)
+    expect(composition?.items).toHaveLength(7)
+    expect(usage?.restrictions).toHaveLength(3)
+  })
+})
