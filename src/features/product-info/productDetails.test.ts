@@ -1106,3 +1106,39 @@ describe('Baoqin bovine bone marrow peptide product detail', () => {
     )
   })
 })
+
+describe('Dendrobium ginseng product detail', () => {
+  it('connects single-22 to digestion and preserves commercial data', () => {
+    const detail = informationProductDetailById.get('single-22')
+    const product = productById.get('single-22')
+
+    expect(detail?.screen).toBe('product-health-digestion-dendrobium-ginseng')
+    expect(product?.nameRu).toBe('Тонизирующий продукт с женьшенем и дендробиумом')
+    expect(product?.nameZh).toBe('石斛胚芽人参粉')
+    expect(product?.prices).toEqual({ 0: 319, 10: 279, 20: 252, 30: 225, 40: 198, 50: null, 60: null })
+    expect(detail?.heroImage).toEqual({
+      src: '/images/dendrobium-ginseng-powder-hero.png',
+      alt: 'Упаковка тонизирующего напитка с женьшенем и дендробиумом',
+      width: 1536,
+      height: 1024,
+    })
+    expect(informationProductDetailByScreen.get(detail!.screen)).toBe(detail)
+  })
+
+  it('keeps the five observations, five ingredients, and three restrictions', () => {
+    const detail = informationProductDetailById.get('single-22')!
+    const composition = detail.sections.find((section) => section.id === 'composition')
+    const usage = detail.sections.find((section) => section.id === 'usage')
+
+    expect(detail.summary.properties).toHaveLength(5)
+    expect(detail.summary.properties.every((property) => property.verificationStatus === 'requires-confirmation')).toBe(true)
+    expect(composition?.items).toEqual([
+      'Зародыши дендробиума.',
+      'Женьшень (искусственно выращенный, возраст растения до 5 лет).',
+      'Хайпи (海皮).',
+      'Коричневый сахар.',
+      'Гидрокарбонат натрия.',
+    ])
+    expect(usage?.restrictions).toHaveLength(3)
+  })
+})
