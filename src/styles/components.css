@@ -729,6 +729,11 @@
   object-fit: contain;
   background: #eef5e8;
 }
+
+.health-direction-card[data-direction-id='memory'] .health-direction-card__media img {
+  object-fit: cover;
+  object-position: center;
+}
 .health-direction-card__arrow {
   position: absolute;
   z-index: 3;
